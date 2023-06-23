@@ -5,20 +5,17 @@ import boto3
 from botocore.client import Config
 lista_usuarios = list()
 
+
+
+
+
+
+
+
+
 s3=boto3.resource('s3',aws_access_key_id='AKIAVUJFRDVN5ZXYPPVS',
                    aws_secret_access_key='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',
                    config=Config(signature_version='s3v4'))
-
-
-
-class Usuarios:
-    def __init__(self, usuario, contrasenia):
-        self.usuario = usuario
-        self.contrasenia = contrasenia
-
-
-
-
 
 
 
@@ -31,22 +28,22 @@ def desencriptar_contra(linea,llave):
 
 
 def validar(x,y):
-    
-    if x in lista_usuarios:
-        print("Usuario Correcto")
-        valor = lista_usuarios.index(x)
-        contra = lista_usuarios[valor+1]
-        contra_desenc = desencriptar_contra(contra,'miaproyecto12345')
-        contra_desenc = contra_desenc.decode("utf-8", "ignore")
+ leerarchivo()
+ if x in lista_usuarios:
+     print("Usuario Correcto")
+     valor = lista_usuarios.index(x)
+     contra = lista_usuarios[valor+1]
+     contra_desenc = desencriptar_contra(contra,'miaproyecto12345')
+     contra_desenc = contra_desenc.decode("utf-8", "ignore")
 
-        if y == contra_desenc:
-            print(y+" = "+contra_desenc)
-            print("Contraseña Correcta")
-            return True
+     if y == contra_desenc:
+         print(y+" = "+contra_desenc)
+         print("Contraseña Correcta")
+         return True
           
             
-        else:
-           return False
+     else:
+         return False
 
 
 
@@ -59,4 +56,12 @@ def leerarchivo():
      linea = linea.decode('utf-8')
      lista_usuarios.append(linea.replace("\n", ""))
 
- archivo.close()  
+ archivo.close()
+
+
+def cargar_archivo(ruta):
+    archivo = open(ruta, "r")
+    for linea in archivo:
+     print(linea)
+    archivo.close()
+    return True

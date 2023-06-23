@@ -13,7 +13,7 @@ def inicio():
  return jsonify({"mensaje": "Bienvenido a la API de Python"})
 
 @app.route('/login', methods=['POST'])
-def inicio():
+def login():
  usurio=request.json['usuario']
  contrasenia=request.json['contrasenia']
  if validar(usurio,contrasenia):
@@ -22,6 +22,10 @@ def inicio():
      return jsonify({"mensaje": "rechazado"})
 
 
+@app.route('/carga_archivo', methods=['POST'])
+def carga():
+ ruta=request.json['ruta']
+ 
 
 
 
