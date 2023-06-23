@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import boto3
 from botocore.client import Config
+from metodos import validar
 
 app = Flask(__name__)
 CORS(app)
@@ -10,6 +11,25 @@ CORS(app)
 def inicio():
  print("Hola mundo")
  return jsonify({"mensaje": "Bienvenido a la API de Python"})
+
+@app.route('/login', methods=['POST'])
+def inicio():
+ usurio=request.json['usuario']
+ contrasenia=request.json['contrasenia']
+ if validar(usurio,contrasenia):
+     return jsonify({"mensaje": "aceptado"})
+ else:
+     return jsonify({"mensaje": "rechazado"})
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
  app.run(threaded=True, host="0.0.0.0", port=5000, debug=True)
