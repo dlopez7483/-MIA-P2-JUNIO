@@ -17,7 +17,7 @@ s3=boto3.resource('s3',aws_access_key_id='AKIAVUJFRDVN5ZXYPPVS',
                    aws_secret_access_key='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',
                    config=Config(signature_version='s3v4'))
 
-
+#------------------------------------validar_usuario------------------------------------
 
 def desencriptar_contra(linea,llave):
  b64 = base64.b64encode(bytes.fromhex(linea)).decode()
@@ -57,11 +57,21 @@ def leerarchivo():
      lista_usuarios.append(linea.replace("\n", ""))
 
  archivo.close()
+#--------------------------------------------------------------------
 
 
+
+
+#----------------------------------cargar archivo con instrucciones
 def cargar_archivo(ruta):
-    archivo = open(ruta, "r")
-    for linea in archivo:
-     print(linea)
-    archivo.close()
-    return True
+ try: 
+     archivo = open(ruta, "r")
+     for linea in archivo:
+         print(linea)
+
+     archivo.close()
+     return True
+ except:
+     return False
+
+#------------------------------------------------------------

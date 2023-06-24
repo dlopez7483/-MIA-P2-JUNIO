@@ -10,4 +10,5 @@ class Create:
  def crear(self):
      if self.type=="Server":
          print("Creando en servidor")
-    
+     elif self.type=="Bucket":
+         print("Creando en Bucket")

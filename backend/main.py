@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import boto3
 from botocore.client import Config
-from metodos import validar
+from metodos import validar, cargar_archivo
 
 app = Flask(__name__)
 CORS(app)
@@ -25,7 +25,12 @@ def login():
 @app.route('/carga_archivo', methods=['POST'])
 def carga():
  ruta=request.json['ruta']
- 
+ if cargar_archivo(ruta):
+     return jsonify({"mensaje": "archivo cargado"})
+ else:
+     return jsonify({"mensaje": "error al cargar el archivo"})  
+
+
 
 
 
