@@ -34,6 +34,7 @@ class analizador:
 class analisis:
  def __init__(self,linea):
      self.linea=linea
+     self.iniciar_comandos()
  def iniciar_comandos(self):
      a=analizador(self.linea)
      ins=a.instruccion()

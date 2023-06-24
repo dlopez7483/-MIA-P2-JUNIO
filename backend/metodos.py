@@ -3,6 +3,7 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad,unpad
 import boto3
 from botocore.client import Config
+from analizador import analisis
 lista_usuarios = list()
 
 
@@ -64,11 +65,12 @@ def leerarchivo():
 
 #----------------------------------cargar archivo con instrucciones
 def cargar_archivo(ruta):
+ 
  try: 
      archivo = open(ruta, "r")
      for linea in archivo:
          print(linea)
-
+         a=analisis(linea.replace("\n", ""))
      archivo.close()
      return True
  except:
