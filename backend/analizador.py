@@ -4,7 +4,7 @@ from flask import  jsonify
 from delete import delete
 from copiar import copiar
 from transfer import transfer
-from rename import rename
+from renombrar import renombrar
 from modify import Modify
 from backup import backup
 from recovery import recovery
@@ -139,7 +139,7 @@ class analisis:
                      type="Bucket"  
 
          if(path!="" and name!="" and type!=""):
-             r=rename(path,name,type)
+             r=renombrar(path,name,type)
      elif(re.match("Modify",ins,re.I)):
          path=""
          body=""
