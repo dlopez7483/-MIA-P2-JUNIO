@@ -39,19 +39,52 @@ class copiar:
          print("Copiando de Bucket a Bucket")
          self.copiar_bucket_bucket()
 
+
+
+ def copiar_bucket_bucket(self):
+     response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos"+self.to)
+     existencia = response.get('Contents', [])
+     response2 = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos"+self.desde)
+     existencia2 = response.get('Contents', [])
+    
+     if existencia2 and existencia:
+         try:
+            if re.search(r"\.txt$", self.desde, re.I):
+                 s3_client.copy_object(Bucket='bucket201907483', CopySource={'Bucket': 'bucket201907483', 'Key': 'Archivos'+self.desde}, Key='Archivos'+self.to)
+            else:
+             response = s3_client.list_objects_v2(Bucket='bucket201907483', Prefix='Archivos'+self.desde)
+             for obj in response['Contents']:
+                 ruta_objeto_origen = obj['Key']
+                 ruta_objeto_destino = 'Archivos'+self.to + ruta_objeto_origen[len('Archivos'+self.desde):]
+                 s3_client.copy_object(
+                 CopySource={'Bucket':'bucket201907483', 'Key': ruta_objeto_origen},
+                 Bucket='bucket201907483',
+                 Key=ruta_objeto_destino
+                 )
+                 print("copiado exitosamente de bucket a bucket")
+         except Exception as e:
+             print("Error al copiar el archivo del bucket a bucket:", str(e))
+          
+             
+
  def copiar_server_bucket(self):
      response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos"+self.to)
      existencia = response.get('Contents', [])
      root=str(Path.home()/'Archivos')
      ruta_archivo = Path(root+self.desde)
      if ruta_archivo.exists() and existencia:
-         try:
-             s3_client.upload_file(str(ruta_archivo),'bucket201907483',"Archivos"+self.to)
-             print("Archivo copiado exitosamente de local al bucket.")
-         except Exception as e:
-             print("Error al copiar el archivo de local al bucket:", str(e))
-
-
+         if re.search(r"\.txt$", self.desde, re.I):
+             s3_client.upload_file(ruta_archivo,'bucket201907483',root+self.to)
+         else:
+             for root, dirs, files in os.walk(root+self.desde):
+                 for file in files:
+                     ruta_archivo_local = os.path.join(root, file)
+                     ruta_archivo_bucket = os.path.join('Archivos'+self.to, os.path.relpath(ruta_archivo_local,root+self.desde))
+                     try:
+                         s3_client.upload_file(ruta_archivo_local,'bucket201907483', ruta_archivo_bucket)
+                         print("Archivo copiado exitosamente de local a bucket.")
+                     except Exception as e:
+                         print(str(e))
 
  def copiar_server_server(self):
      ruta=str(Path.home()/'Archivos')
@@ -88,8 +121,16 @@ class copiar:
      ruta_archivo = Path(root+self.to)
      if ruta_archivo.exists() and existencia:
          try:
-             s3_client.download_file('bucket201907483',"Archivos"+self.desde,str(ruta_archivo))
-             print("Archivo copiado exitosamente del bucket a local.")
+             if re.search(r"\.txt$", self.desde, re.I):
+                 s3_client.download_file('bucket201907483',"Archivos"+self.desde,str(ruta_archivo))
+                 print("Archivo copiado exitosamente del bucket a local.")
+             else:
+                 response = s3_client.list_objects_v2(Bucket='bucket201907483', Prefix='Archivos'+self.desde)
+                 for obj in response['Contents']:
+                     ruta_objeto_origen = obj['Key']
+                     ruta_objeto_destino = root+self.to + ruta_objeto_origen[len('Archivos'+self.desde):]
+                     s3_client.download_file('bucket201907483', ruta_objeto_origen, ruta_objeto_destino)
+                     print("Archivo copiado exitosamente del bucket a local.")
          except Exception as e:
              print("Error al copiar el archivo del bucket a local:", str(e))
     
