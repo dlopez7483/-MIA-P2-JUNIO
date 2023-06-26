@@ -44,5 +44,6 @@ class Create:
             except Exception as e:
                 print("No se pudo crear el archivo en el bucket:", str(e))
 
-c = Create("hola.txt", "mundo", "Bucket", "/hola/")
 
+
+#c=Create("hola3.txt","hola","Bucket","/p/p1/")
