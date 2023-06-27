@@ -1,6 +1,6 @@
 import base64
-from Crypto.Cipher import AES
-from Crypto.Util.Padding import pad,unpad
+from crypto.Cipher import AES
+from crypto.Util.Padding import pad,unpad
 import boto3
 from botocore.client import Config
 from analizador import analisis
