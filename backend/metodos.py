@@ -67,11 +67,13 @@ def leerarchivo():
 def cargar_archivo(ruta):
  
  try: 
-     archivo = open(ruta, "r")
+     #archivo = open(ruta, "r")
+     archivo = ruta.split('\n')
      for linea in archivo:
          print(linea)
-         a=analisis(linea.replace("\n", ""))
-     archivo.close()
+         #a=analisis(linea.replace("\n", ""))
+         a=analisis(linea)
+     #archivo.close()
      return True
  except:
      return False
