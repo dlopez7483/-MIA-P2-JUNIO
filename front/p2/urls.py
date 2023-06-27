@@ -22,7 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home, name='home'),
     path('login/',views.login,name='login'),
-    path('venpri/',views.subirarchiv, name='venpri'),
-    
+    path('venpri/',views.abrir_archivo, name='venpri'),
+    path('ejecutar/',views.ejecutar, name='ejecutar'),
 ]
 
