@@ -15,33 +15,13 @@
   </form>
 
 
-  <form method="POST" id="formulario">
-  <textarea name="contenido" id="contenido-entrada">{{ contenido }}</textarea>
-  </form>
-
 
 <form method="POST" action="{% url 'ejecutar' %}" enctype="multipart/form-data">
     {% csrf_token %}
+    <textarea name="contenido_entrada">{{ contenido }}</textarea>
     <input type="submit" id="btnejecutar" value="Ejecutar">
   </form>
     
-    <textarea id="texto-respuesta"></textarea>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-    $(document).ready(function() {
-      $('#btnejecutar').click(function() {
-        var textoEntrada = $('#contenido-entrada').val();
-        $.ajax({
-          url: '/ejecutar/',
-          type: 'POST',
-          data: {contenido: textoEntrada},
-          success: function(response) {
-            $('#texto-respuesta').val(response.texto_respuesta);
-          }
-        });
-      });
-    });
-    </script>    
+    <textarea id="texto-respuesta"></textarea> 
 
   
