@@ -1,6 +1,17 @@
-import os
-import re
 from pathlib import Path
+import shutil
+import boto3
+from botocore.client import Config
+import re
+import os
+s3_client = boto3.client(
+    's3',
+    aws_access_key_id='AKIAVUJFRDVN5ZXYPPVS',
+    aws_secret_access_key='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',
+    config=Config(signature_version='s3v4')
+)
+
+
 class renombrar:
  def __init__(self, path, name, type):
      self.name = name
@@ -43,4 +54,17 @@ class renombrar:
                  except:
                       print("Error carpeta ya existe")
      elif self.type=="Bucket":
-         print("Renombrando en Bucket")
+         response = s3_client.list_objects_v2(Bucket='bucket201907483', Prefix='Archivos'+self.path)
+
+         
+         for obj in response['Contents']:
+             nuevo_prefijo = obj['Key'].replace('Archivos'+self.path,self.name, 1)
+             s3_client.copy_object(
+             Bucket='bucket201907483',
+             CopySource={'Bucket':'bucket201907483', 'Key': obj['Key']},
+             Key=nuevo_prefijo
+             )
+         s3_client.delete_object(Bucket='bucket201907483', Key='Archivos'+self.path)
+            
+       
+           
