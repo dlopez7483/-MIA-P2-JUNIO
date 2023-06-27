@@ -39,7 +39,7 @@ def login(request):
          
 
 
-def subirarchiv(request):
+""" def subirarchiv(request):
     form = PrincipalForm()
         
     if request.method == 'POST':
@@ -53,7 +53,7 @@ def subirarchiv(request):
             return render(request, 'ventana_principal.html', {'consola_entrada': contenido})
 
 
-    return render(request, 'ventana_principal.html', {'form':form})
+    return render(request, 'ventana_principal.html', {'form':form}) """
 
 def abrir_archivo(request):
     if request.method == 'POST':
@@ -65,12 +65,16 @@ def abrir_archivo(request):
     
 def ejecutar(request):
     if request.method == 'POST':
-        contenido = request.POST.get('contenido', '')
+        texto = request.POST.get('contenido_entrada', '')
         print("ejecutando")
-        return render(request, 'ventana_principal.html', {'contenido': contenido})      
-    else:
+        #print(texto)
+        url_flask = 'http://localhost:5000/carga_archivo'
+        response = requests.post(url_flask, data={'contenido': texto})    
+        return response.text  
+    
        
-        return render(request, 'ventana_principal.html')
+    
+    return render(request, 'ventana_principal.html')
     
 
 

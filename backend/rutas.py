@@ -24,8 +24,9 @@ def login():
 
 @app.route('/carga_archivo', methods=['POST'])
 def carga():
- ruta=request.json['ruta']
- if cargar_archivo(ruta):
+ contenido = request.form.get('contenido')
+ #ruta=request.json['ruta']
+ if cargar_archivo(contenido):
      return jsonify({"mensaje": "archivo cargado"})
  else:
      return jsonify({"mensaje": "error al cargar el archivo"})  
