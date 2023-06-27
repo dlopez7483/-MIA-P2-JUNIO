@@ -32,4 +32,24 @@ class delete_all:
          except FileNotFoundError:
              print("La carpeta no existe")
      elif self.type=="Bucket":
+         response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos/")
+         
+         objetos = response.get('Contents', [])
+         if objetos:
+             for obj in objetos:
+                 obj2=obj.get('Contents', [])
+                 if obj2:
+                     self.eliminar_carpeta_bucket("Archivos/"+obj['Key'])
+                 else:
+                     s3_client.delete_object(Bucket='bucket201907483', Key=obj['Key'])
 
+ def eliminar_carpeta_bucket(self,ruta):
+     response = s3_client.list_objects(Bucket='bucket201907483', Prefix=ruta)
+     objetos = response.get('Contents', [])
+     if objetos:
+         for obj in objetos:
+             obj2=obj.get('Contents', [])
+             if obj2:
+                 self.eliminar_carpeta_bucket(ruta+obj['Key'])
+             else:
+                 s3_client.delete_object(Bucket='bucket201907483', Key=obj['Key'])
