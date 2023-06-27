@@ -14,7 +14,7 @@ def inicio():
 
 @app.route('/login', methods=['POST'])
 def login():
- usurio=request.json['usuario']
+ usurio=request.json['usurio']
  contrasenia=request.json['contrasenia']
  if validar(usurio,contrasenia):
      return jsonify({"mensaje": "aceptado"})
