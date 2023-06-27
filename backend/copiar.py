@@ -74,7 +74,8 @@ class copiar:
      ruta_archivo = Path(root+self.desde)
      if ruta_archivo.exists() and existencia:
          if re.search(r"\.txt$", self.desde, re.I):
-             s3_client.upload_file(ruta_archivo,'bucket201907483',root+self.to)
+             s3_client.upload_file(ruta_archivo,'bucket201907483',"Archivos"+self.to)
+             print("Archivo copiado exitosamente de local a bucket.")
          else:
              for root, dirs, files in os.walk(root+self.desde):
                  for file in files:
@@ -135,4 +136,4 @@ class copiar:
              print("Error al copiar el archivo del bucket a local:", str(e))
     
          
-                     
+c=copiar("/carpeta1/carpeta2/prueba.txt","/p/","Bucket","Server")

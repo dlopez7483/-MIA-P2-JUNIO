@@ -47,13 +47,7 @@ class delete:
             try:
                 if self.name!="":
                  ruta_archivo = "Archivos"+self.path+self.name
-                 response = s3_client.list_objects(Bucket='bucket201907483', Prefix=ruta_archivo)
-                 objetos = response.get('Contents', [])
-                 if objetos:
-                     for objeto in objetos:
-                         s3_client.delete_object(Bucket='bucket201907483', Key=objeto['Key'])
-                     
-
+                 s3_client.delete_object(Bucket='bucket201907483', Key=ruta_archivo)
                
                  print("Archivo eliminado con éxito.")
                 else:
@@ -72,11 +66,9 @@ class delete:
                          s3_client.delete_object(Bucket='bucket201907483', Key=objeto['Key'])
         
                  s3_client.delete_object(Bucket='bucket201907483', Key=ruta_archivo)
+                 return "Carpeta" + self.path + "eliminada"
                      
             except:
              print("no se pudo eliminar el archivo")
              
 
-
-d=delete("/p/p1/","hola3.txt","Bucket")
-d.eliminar()

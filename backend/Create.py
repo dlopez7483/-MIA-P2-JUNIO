@@ -47,5 +47,3 @@ class Create:
 
 
 
-c=Create("hola3.txt","hola","Bucket","/p/p1/")
-print(c.crear())
