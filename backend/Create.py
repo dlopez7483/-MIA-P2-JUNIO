@@ -38,11 +38,10 @@ class Create:
                return "No se pudo crear el archivo:", str(e)
 
         elif self.type == "Bucket":
-            ruta_archivo = "Archivos" + self.path + self.name
-            try:
-                s3_client.put_object(Body=self.body, Bucket='bucket201907483', Key=ruta_archivo)
-                return "Archivo" + self.path + self.name + "creado"
-            except Exception as e:
-                 return "No se pudo crear el archivo:", str(e)
-
+         ruta_archivo = "Archivos" + self.path + self.name
+         try:
+             s3_client.put_object(Body=self.body, Bucket='bucket201907483', Key=ruta_archivo)
+             return "Archivo" + self.path + self.name + "creado"
+         except Exception as e:
+             return "No se pudo crear el archivo:", str(e)
 

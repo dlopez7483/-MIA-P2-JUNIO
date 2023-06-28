@@ -23,18 +23,18 @@ class transfer:
      try:
          if(self.type_to=="Server" and self.type_from=="Server"):
              print("Transfiriendo de local a local")
-             self.transfer_server_server()
+             return self.transfer_server_server()
          elif(self.type_to=="Server" and self.type_from=="Bucket"):
              print("Transfiriendo de Bucket a local")
-             self.transfer_bucket_server()
+             return self.transfer_bucket_server()
          elif(self.type_to=="Bucket" and self.type_from=="Server"):
              print("Transfiriendo de local a Bucket")
-             self.transfer_server_bucket()
+             return self.transfer_server_bucket()
          elif(self.type_to=="Bucket" and self.type_from=="Bucket"):
              print("Transfiriendo de Bucket a Bucket")
-             self.transfer_bucket_bucket()
+             return self.transfer_bucket_bucket()
      except:
-         print("No se pudo transferir el archivo")
+         return "Error al transferir el archivo."
  
  
  def transfer_server_bucket(self):
@@ -86,6 +86,7 @@ class transfer:
              shutil.copy(self.desde, self.to)
              ruta_archivo = Path(fro)
              ruta_archivo.unlink()
+             return "Archivo "+self.desde+"transferiod exitosamente de local a local."
              
                 
          else:
@@ -98,17 +99,16 @@ class transfer:
                      shutil.copy2(src_file, dst_file)
                      rut=Path(src_file)
                      rut.unlink()
+             return "Archivo "+self.desde+"transferiod exitosamente de local a local."
                  
                      
             
      else:
          if not existencia_desde:
-             print("La ruta de origen no existe.")
-             print(ruta)
+             return "La ruta"+self.desde+" de origen no existe."
          
          if not existencia_to:
-             print("La ruta de destino no existe.")
-             print(t)
+             return "La ruta"+self.to+" de destino no existe."
 
  def transfer_bucket_bucket(self):
      response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos"+self.desde)
@@ -119,6 +119,7 @@ class transfer:
          if re.search(r"\.txt$", self.desde, re.I):
              s3_client.copy_object(Bucket='bucket201907483', CopySource={'Bucket': 'bucket201907483', 'Key': "Archivos"+self.desde}, Key="Archivos"+self.to)
              s3_client.delete_object(Bucket='bucket201907483', Key="Archivos"+self.desde)
+             return "Archivo "+self.desde+" transferido exitosamente de bucket a bucket."
          else:
              response = s3_client.list_objects_v2(Bucket='bucket201907483', Prefix='Archivos'+self.desde)
              for obj in response['Contents']:
@@ -130,11 +131,14 @@ class transfer:
                  Key=ruta_objeto_destino
                  )
                  s3_client.delete_object(Bucket='bucket201907483', Key=ruta_objeto_origen)
+             return "Archivo "+self.desde+" transferido exitosamente de bucket a bucket."
+    
+     else:
          if not existencia:
-             print("La ruta de origen no existe.")
+              return "La ruta "+self.desde+" de origen no existe."
          
          if not existencia2:
-             print("La ruta de destino no existe.")
+             print("La ruta "+self.to+" de destino no existe.")
 
 
 

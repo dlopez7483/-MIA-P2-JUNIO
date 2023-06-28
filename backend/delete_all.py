@@ -17,7 +17,7 @@ s3_client = boto3.client(
 class delete_all:
  def __init__(self,type):
      self.type=type
-     self.eliminar()
+  
  def eliminar(self):
      if self.type=="Server":
          root=str(Path.home()/'Archivos/')

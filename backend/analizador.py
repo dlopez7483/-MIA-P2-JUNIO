@@ -79,6 +79,8 @@ class analisis:
                      type="Bucket"
          if(path!="" and type!=""):
              d=delete(path,name,type)
+         else:
+             return "Error en los parametros de eliminar"
      elif(re.match("Copy",ins,re.I)):
          from_=""
          to=""
@@ -102,6 +104,8 @@ class analisis:
          if(from_!="" and to!="" and type_to!="" and type_from!=""):
              c=copiar(from_,to,type_to,type_from)
              return c.copiar_()
+         else:
+             return "Error en los parametros de copiar"
      elif(re.match("Transfer",ins,re.I)):
          from_=""
          to=""
@@ -125,6 +129,8 @@ class analisis:
          if(from_!="" and to!="" and type_to!="" and type_from!=""):
              t=transfer(from_,to,type_to,type_from)
              return t.transfer_()
+         else:
+             return "Error en los parametros de transferir"
      elif(re.match("Rename",ins,re.I)):
          path="" 
          name = ""
@@ -143,6 +149,8 @@ class analisis:
          if(path!="" and name!="" and type!=""):
              r=renombrar(path,name,type)
              return r.renombrar()
+         else:
+             return "Error en los parametros de renombrar"
      elif(re.match("Modify",ins,re.I)):
          path=""
          body=""
@@ -160,6 +168,8 @@ class analisis:
          if(path!="" and body!="" and type!=""):
              m=Modify(body,type,path)
              return m.modificar()
+         else:
+             return "Error en los parametros de modificar"
      elif(re.match("Backup",ins,re.I)):
          type_to=""
          type_from=""
@@ -186,6 +196,8 @@ class analisis:
          if(type_to!="" and type_from!="" and name!=""):
              b=backup(type_to,type_from,ip,port,name)
              return b.backup_()
+         else:
+                return "Error en los parametros de backup"
      elif(re.match("Recovery",ins,re.I)):
          type_to=""
          type_from=""
@@ -212,6 +224,8 @@ class analisis:
          if(type_to!="" and type_from!="" and name!=""):
              r=recovery(type_to,type_from,ip,port,name)
              return r.recovery_()
+         else:
+             return "Error en los parametros de recovery"
      elif(re.match("delete_all",ins,re.I)):
          type=""
          for c in comands:
@@ -222,6 +236,9 @@ class analisis:
                      type="Bucket"
          if(type!=""):
              d=delete_all(type)
+             return d.delete_all_()
+         else:
+             return "Error en los parametros de eliminar todo"
      elif(re.match("Open",ins,re.I)):
          type=""
          ip=""
@@ -241,8 +258,11 @@ class analisis:
                  name=c[1]
          if(type!="" and name!=""):
              a=abrir(type,ip,port,name)
+             return a.abrir_()
+         else:
+             return "Error en los parametros de abrir"
      else:
-         print("Comando no reconocido")
+         return "Error en la instrucción."
 
               
         
