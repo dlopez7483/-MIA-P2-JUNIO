@@ -15,7 +15,7 @@ class Create:
         self.body = body
         self.type = type
         self.path = path
-        self.crear()
+        
 
     def crear(self):
         if self.type == "Server":
@@ -44,6 +44,5 @@ class Create:
                 return "Archivo" + self.path + self.name + "creado"
             except Exception as e:
                  return "No se pudo crear el archivo:", str(e)
-
 
 
