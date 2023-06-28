@@ -1,4 +1,84 @@
-<h1>Ventana principal</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ventana Principal</title>
+  <style type="text/css">
+    html {
+width: 100%;
+height: 100%;
+}
+
+h1 {
+  font-family:sans-serif;
+  text-align: center;
+  font-style: bold;
+  color: black;
+  font-size: 35px;
+}
+
+body {
+background: linear-gradient(45deg, rgba(66, 245, 224, 0.8) 0%, rgba(106, 29, 239, 0.4) 100%);
+color: rgba(0, 0, 0, 0.6);
+font-family: "Roboto", sans-serif;
+font-size: 14px;
+line-height: 1.6em;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+
+input[type=submit]{
+  background-color: #1d0c7a;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+
+}
+textarea {
+  width: 100%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  resize: none;
+}
+.custom-input-file {
+  background-color: #58960d;
+  color: #fff;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 auto 0;
+  min-height: 15px;
+  overflow: hidden;
+  padding: 10px;
+  position: relative;
+  text-align: center;
+  width: 400px;
+}
+
+.custom-input-file .input-file {
+ border: 10000px solid transparent;
+ cursor: pointer;
+ font-size: 10000px;
+ margin: 0;
+ opacity: 0;
+ outline: 0 none;
+ padding: 0;
+ position: absolute;
+ right: -1000px;
+ top: -1000px;
+}
+</style>
+</head>
+<body>
+  <h1>Ventana principal</h1>
 
 <!-- <form action="" method="post">
     {% csrf_token %}
@@ -10,18 +90,30 @@
 
 <form method="POST" action="{% url 'venpri' %}" enctype="multipart/form-data">
     {% csrf_token %}
-    <input type="file" name="archivo">
-    <input type="submit" value="Abrir archivo">
+    <div class="custom-input-file col-md-6 col-sm-6 col-xs-6">
+      <input type="file" id="fichero-tarifas" class="input-file" name="archivo" value="">
+      SUBIR ARCHIVO
+      
+      </div>
+      <input type="submit" value="LEER ARCHIVO">
+    
   </form>
 
 
 
 <form method="POST" action="{% url 'ejecutar' %}" enctype="multipart/form-data">
     {% csrf_token %}
+    <br>
     <textarea name="contenido_entrada">{{ contenido }}</textarea>
-    <input type="submit" id="btnejecutar" value="Ejecutar">
+    <br>
+    <input type="submit" id="btnejecutar" value="EJECUTAR">
   </form>
-    
+    <br>
     <textarea id="texto-respuesta"></textarea> 
+</body>
+</html>
+
+
+    
 
   
