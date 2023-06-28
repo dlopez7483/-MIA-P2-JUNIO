@@ -52,7 +52,7 @@ def validar(x,y):
 
 
 def leerarchivo():
- archivo = s3_client.list_objects(Bucket='bucket201907483', Prefix='Archivos/usuarios.txt')
+ archivo = s3_client.list_objects(Bucket='bucket201907483', Prefix='usuarios.txt')
     
  for linea in archivo['Body'].iter_lines():
      linea = linea.decode('utf-8')
