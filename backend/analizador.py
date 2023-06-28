@@ -101,6 +101,7 @@ class analisis:
                      type_from="Bucket"
          if(from_!="" and to!="" and type_to!="" and type_from!=""):
              c=copiar(from_,to,type_to,type_from)
+             return c.copiar_()
      elif(re.match("Transfer",ins,re.I)):
          from_=""
          to=""
@@ -123,6 +124,7 @@ class analisis:
                         type_from="Bucket"
          if(from_!="" and to!="" and type_to!="" and type_from!=""):
              t=transfer(from_,to,type_to,type_from)
+             return t.transfer_()
      elif(re.match("Rename",ins,re.I)):
          path="" 
          name = ""
@@ -140,6 +142,7 @@ class analisis:
 
          if(path!="" and name!="" and type!=""):
              r=renombrar(path,name,type)
+             return r.renombrar()
      elif(re.match("Modify",ins,re.I)):
          path=""
          body=""
@@ -156,6 +159,7 @@ class analisis:
                      type="Bucket" 
          if(path!="" and body!="" and type!=""):
              m=Modify(body,type,path)
+             return m.modificar()
      elif(re.match("Backup",ins,re.I)):
          type_to=""
          type_from=""
@@ -181,6 +185,7 @@ class analisis:
                  name=c[1]
          if(type_to!="" and type_from!="" and name!=""):
              b=backup(type_to,type_from,ip,port,name)
+             return b.backup_()
      elif(re.match("Recovery",ins,re.I)):
          type_to=""
          type_from=""
@@ -206,6 +211,7 @@ class analisis:
                  name=c[1]
          if(type_to!="" and type_from!="" and name!=""):
              r=recovery(type_to,type_from,ip,port,name)
+             return r.recovery_()
      elif(re.match("delete_all",ins,re.I)):
          type=""
          for c in comands:

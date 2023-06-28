@@ -17,10 +17,9 @@ class renombrar:
      self.name = name
      self.type = type
      self.path = path
-     self.renombrar()
 
 
- def renombrar(self):
+ def renombrar_(self):
      if self.type=="Server":
          ruta=str(Path.home()/'Archivos')+self.path
          existencia_path = os.path.exists(ruta)
@@ -36,8 +35,9 @@ class renombrar:
                      nueva_ruta = os.path.join(nombre_directorio, nuevo_nombre_archivo)
                 
                      os.rename(ruta, nueva_ruta)
+                     return "Archivo "+self.path+" renombrado con éxito como "+self.name+"."
                  except:
-                     print("Error")  
+                     return "Error al renombrar el archivo."  
              else:
                  try:
                      carpetas=ruta.split("/")
@@ -51,20 +51,20 @@ class renombrar:
                      nuevo_directorio = os.path.join(nombre_directorio,self.name)
                
                      os.rename(ruta, nuevo_directorio)
+                     return "Archivo "+self.path+" renombrado con éxito como "+self.name+"."
                  except:
-                      print("Error carpeta ya existe")
+                     return "Error al renombrar el archivo."
      elif self.type=="Bucket":
-         response = s3_client.list_objects_v2(Bucket='bucket201907483', Prefix='Archivos'+self.path)
+         try:
+             div=self.path.split("/")
+             cadena=""
+             for c in range(len(div)-1):
+                 cadena+=div[c]+"/"
+              
 
-         
-         for obj in response['Contents']:
-             nuevo_prefijo = obj['Key'].replace('Archivos'+self.path,self.name, 1)
-             s3_client.copy_object(
-             Bucket='bucket201907483',
-             CopySource={'Bucket':'bucket201907483', 'Key': obj['Key']},
-             Key=nuevo_prefijo
-             )
-         s3_client.delete_object(Bucket='bucket201907483', Key='Archivos'+self.path)
+             s3_client.copy_object(Bucket='bucket201907483', CopySource={'Bucket': 'bucket201907483', 'Key': 'Archivos'+self.path}, Key='Archivos'+cadena+self.name)
+             s3_client.delete_object(Bucket='bucket201907483', Key='Archivos'+self.path)
+             return "Archivo "+self.path+" renombrado con éxito como "+self.name+"."
+         except Exception as e:
+             return "Error al renombrar el archivo en el bucket:", str(e)
             
-       
-           

@@ -21,7 +21,7 @@ class recovery:
      self.ip=ip
      self.port=port
      self.name=name
-     self.recovery_()
+     
  def recovery_(self):
      if self.port=="" and self.ip=="":
          if self.type_from=="Server" and self.type_to=="Bucket":

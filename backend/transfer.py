@@ -110,4 +110,59 @@ class transfer:
              print("La ruta de destino no existe.")
              print(t)
 
-t=transfer("/prueba1/","/prueba2/","Server","Server")
+ def transfer_bucket_bucket(self):
+     response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos"+self.desde)
+     existencia = response.get('Contents', [])
+     response2 = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos"+self.to)
+     existencia2 = response2.get('Contents', [])
+     if existencia and existencia2:
+         if re.search(r"\.txt$", self.desde, re.I):
+             s3_client.copy_object(Bucket='bucket201907483', CopySource={'Bucket': 'bucket201907483', 'Key': "Archivos"+self.desde}, Key="Archivos"+self.to)
+             s3_client.delete_object(Bucket='bucket201907483', Key="Archivos"+self.desde)
+         else:
+             response = s3_client.list_objects_v2(Bucket='bucket201907483', Prefix='Archivos'+self.desde)
+             for obj in response['Contents']:
+                 ruta_objeto_origen = obj['Key']
+                 ruta_objeto_destino = 'Archivos'+self.to + ruta_objeto_origen[len('Archivos'+self.desde):]
+                 s3_client.copy_object(
+                 CopySource={'Bucket':'bucket201907483', 'Key': ruta_objeto_origen},
+                 Bucket='bucket201907483',
+                 Key=ruta_objeto_destino
+                 )
+                 s3_client.delete_object(Bucket='bucket201907483', Key=ruta_objeto_origen)
+         if not existencia:
+             print("La ruta de origen no existe.")
+         
+         if not existencia2:
+             print("La ruta de destino no existe.")
+
+
+
+
+ def transfer_bucket_server(self):
+     response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos"+self.desde)
+     existencia = response.get('Contents', [])
+     root=str(Path.home()/'Archivos')
+     ruta_archivo = Path(root+self.to)
+     if ruta_archivo.exists() and existencia:
+         try:
+             if re.search(r"\.txt$", self.desde, re.I):
+                 s3_client.download_file('bucket201907483',"Archivos"+self.desde,str(ruta_archivo))
+                 s3_client.delete_object(Bucket='bucket201907483', Key="Archivos"+self.desde)
+             else:
+                 response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos"+self.desde)
+    
+                 for obj in response['Contents']:
+                     s3_key = obj['Key']
+                     local_file_path = os.path.join(ruta_archivo, s3_key[len("Archivos"+self.desde):])
+        
+                     if not os.path.exists(os.path.dirname(local_file_path)):
+                         os.makedirs(os.path.dirname(local_file_path))
+        
+            
+                     s3_client.download_file('bucket201907483', s3_key, local_file_path)
+                     s3_client.delete_object(Bucket='bucket201907483', Key=s3_key)
+         except Exception as e:
+             print("Error al copiar el archivo del bucket a local:", str(e))
+
+t=transfer("/p/","/transfer/","Server","Bucket")

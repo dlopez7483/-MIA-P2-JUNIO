@@ -28,7 +28,7 @@ class delete_all:
                      os.remove(ruta_completa_origen)
                     else:
                      shutil.rmtree(ruta_completa_origen)
-            
+             return "Archivos del server eliminados con éxito."    
          except FileNotFoundError:
              print("La carpeta no existe")
      elif self.type=="Bucket":
@@ -42,6 +42,7 @@ class delete_all:
                      self.eliminar_carpeta_bucket("Archivos/"+obj['Key'])
                  else:
                      s3_client.delete_object(Bucket='bucket201907483', Key=obj['Key'])
+         return "Archivos del bucket eliminados con éxito."
 
  def eliminar_carpeta_bucket(self,ruta):
      response = s3_client.list_objects(Bucket='bucket201907483', Prefix=ruta)
@@ -53,3 +54,4 @@ class delete_all:
                  self.eliminar_carpeta_bucket(ruta+obj['Key'])
              else:
                  s3_client.delete_object(Bucket='bucket201907483', Key=obj['Key'])
+

@@ -27,8 +27,9 @@ class Modify:
                   with open(root, 'w') as archivo:
                      archivo.write(self.body)
              archivo.close()
+             return "Archivo"+self.path+" modificado con éxito."
          else:
-              print("Error en el path")
+             return "El archivo "+self.path+" no existe."
      elif self.type=="Bucket":
             response = s3_client.list_objects_v2(Bucket='bucket201907483', Prefix='Archivos'+self.path)
             existencia = response.get('Contents', [])
@@ -36,8 +37,9 @@ class Modify:
                 try:
                  s3_client.delete_object(Bucket='bucket201907483', Key='Archivos'+self.path)
                  s3_client.put_object(Body=self.body, Bucket='bucket201907483', Key='Archivos'+self.path)
+                 return "Archivo "+self.path+" modificado con éxito."
                 except Exception as e:
-                    print("Error al modificar el archivo en el bucket:", str(e))
+                 return "Error al modificar el archivo en el bucket:", str(e)
             else:
-                print("Error en el path")
+             return "El archivo "+self.path+" no existe."
 

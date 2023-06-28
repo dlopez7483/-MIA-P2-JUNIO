@@ -25,9 +25,9 @@ class delete:
                  ruta_archivo = Path(root+self.path+self.name)
                  if ruta_archivo.exists():
                      ruta_archivo.unlink()
-                     print("Archivo eliminado con éxito.")
+                     return "Archivo "+self.path+self.name+" eliminado con éxito."
                  else:
-                     print("El archivo no existe.")
+                     return "El archivo "+self.path+self.name+" no existe."
 
              except:
                  print("no se pudo eliminar el archivo")   
@@ -35,12 +35,12 @@ class delete:
              try:
                  if shutil.os.path.exists(root+self.path):
                       shutil.rmtree(root+self.path)
-                      print("Carpeta eliminada con éxito.")
+                      return "Carpeta "+self.path+" eliminada con éxito."
                  else:
-                     print("La carpeta no existe.")
+                        return "La carpeta "+self.path+" no existe."
                 
              except FileNotFoundError:
-                 print("La carpeta no existe")
+                 return "La carpeta "+self.path+" no existe."
                 
                      
      elif self.type=="Bucket":
@@ -49,7 +49,7 @@ class delete:
                  ruta_archivo = "Archivos"+self.path+self.name
                  s3_client.delete_object(Bucket='bucket201907483', Key=ruta_archivo)
                
-                 print("Archivo eliminado con éxito.")
+                 return "Archivo" + self.path + self.name + "eliminado"
                 else:
                      
 
@@ -69,6 +69,6 @@ class delete:
                  return "Carpeta" + self.path + "eliminada"
                      
             except:
-             print("no se pudo eliminar el archivo")
+             return "No se pudo eliminar el archivo"
              
 
