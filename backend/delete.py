@@ -4,6 +4,7 @@ import boto3
 from botocore.client import Config
 
 
+
 s3_client = boto3.client(
     's3',
     aws_access_key_id='AKIAVUJFRDVN5ZXYPPVS',
@@ -25,21 +26,27 @@ class delete:
                  ruta_archivo = Path(root+self.path+self.name)
                  if ruta_archivo.exists():
                      ruta_archivo.unlink()
+                     #rcontenido("Archivo eliminado con éxito.")
                      print("Archivo eliminado con éxito.")
                  else:
+                     #rcontenido("El archivo no existe.")
                      print("El archivo no existe.")
 
              except:
+                 #rcontenido("no se pudo eliminar el archivo")
                  print("no se pudo eliminar el archivo")   
          elif self.name=="":
              try:
                  if shutil.os.path.exists(root+self.path):
                       shutil.rmtree(root+self.path)
+                      #rcontenido("Carpeta eliminada con éxito.")
                       print("Carpeta eliminada con éxito.")
                  else:
+                     #rcontenido("La carpeta no existe.")
                      print("La carpeta no existe.")
                 
              except FileNotFoundError:
+                 #rcontenido("La carpeta no existe")
                  print("La carpeta no existe")
                 
                      
@@ -48,7 +55,7 @@ class delete:
                 if self.name!="":
                  ruta_archivo = "Archivos"+self.path+self.name
                  s3_client.delete_object(Bucket='bucket201907483', Key=ruta_archivo)
-               
+                 #rcontenido("Archivo eliminado con éxito.")
                  print("Archivo eliminado con éxito.")
                 else:
                      
@@ -66,9 +73,11 @@ class delete:
                          s3_client.delete_object(Bucket='bucket201907483', Key=objeto['Key'])
         
                  s3_client.delete_object(Bucket='bucket201907483', Key=ruta_archivo)
+                 #rcontenido("Carpeta" + self.path + "eliminada")
                  return "Carpeta" + self.path + "eliminada"
                      
             except:
+             #rcontenido("no se pudo eliminar el archivo")
              print("no se pudo eliminar el archivo")
              
 

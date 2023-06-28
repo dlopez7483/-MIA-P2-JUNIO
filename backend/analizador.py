@@ -10,6 +10,7 @@ from backup import backup
 from recovery import recovery
 from delete_all import delete_all
 from abrir import abrir
+
 class analizador:
  def __init__(self,linea):
      self.linea=linea

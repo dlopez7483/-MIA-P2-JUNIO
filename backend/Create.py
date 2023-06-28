@@ -2,6 +2,7 @@ from pathlib import Path
 import boto3
 from botocore.client import Config
 
+
 s3_client = boto3.client(
     's3',
     aws_access_key_id='AKIAVUJFRDVN5ZXYPPVS',
@@ -33,16 +34,21 @@ class Create:
                 archivo = open(ruta_archivo, 'w')
                 archivo.write(self.body)
                 archivo.close()
+                #rcontenido("Archivo" + self.path + self.name + "creado")
                 return "Archivo" + self.path + self.name + "creado"
+            
             except Exception as e:
+               #rcontenido("No se pudo crear el archivo:" + str(e))
                return "No se pudo crear el archivo:", str(e)
 
         elif self.type == "Bucket":
             ruta_archivo = "Archivos" + self.path + self.name
             try:
                 s3_client.put_object(Body=self.body, Bucket='bucket201907483', Key=ruta_archivo)
+                #rcontenido("Archivo" + self.path + self.name + "creado")
                 return "Archivo" + self.path + self.name + "creado"
             except Exception as e:
+                 #rcontenido("No se pudo crear el archivo:" + str(e))
                  return "No se pudo crear el archivo:", str(e)
 
 

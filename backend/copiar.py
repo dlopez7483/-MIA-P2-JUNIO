@@ -4,6 +4,8 @@ import os
 import boto3
 from pathlib import Path
 from botocore.client import Config
+import metodos
+
 
 
 s3_client = boto3.client(
@@ -62,7 +64,12 @@ class copiar:
                  Key=ruta_objeto_destino
                  )
                  print("copiado exitosamente de bucket a bucket")
+                 
+                 #rcontenido("copiado exitosamente de bucket a bucket")
+                 
          except Exception as e:
+             #rcontenido("Error al copiar el archivo del bucket a bucket:")
+             
              print("Error al copiar el archivo del bucket a bucket:", str(e))
           
              
@@ -76,7 +83,8 @@ class copiar:
          if re.search(r"\.txt$", self.desde, re.I):
              division=self.desde.split("/")
              s3_client.upload_file(str(ruta_archivo),'bucket201907483',"Archivos"+self.to+division[len(division)-1])
-          
+            
+             #rcontenido("Archivo copiado exitosamente de local a bucket.")
              print("Archivo copiado exitosamente de local a bucket.")
          else:
              for nombre_archivo in os.listdir(str(ruta_archivo)):
@@ -114,6 +122,8 @@ class copiar:
      if existencia_desde and existencia_to:
          if re.search(r"\.txt$", self.desde, re.I):
              shutil.copy(self.desde, self.to)
+             
+             #rcontenido("Archivo copiado exitosamente")
              print("El archivo ha sido copiado.")
                 
          else:
@@ -127,10 +137,12 @@ class copiar:
                 
      else:
          if not existencia_desde:
+             #rcontenido("la ruta de origen no existe")
              print("La ruta de origen no existe.")
              print(ruta)
          
          if not existencia_to:
+             #rcontenido("la ruta de destino no existe")
              print("La ruta de destino no existe.")
              print(t)
 
@@ -143,6 +155,7 @@ class copiar:
          try:
              if re.search(r"\.txt$", self.desde, re.I):
                  s3_client.download_file('bucket201907483',"Archivos"+self.desde,str(ruta_archivo))
+                 #rcontenido("Archivo copiado exitosamente del bucket a local.")
                  print("Archivo copiado exitosamente del bucket a local.")
              else:
                  response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos"+self.desde)
@@ -157,8 +170,9 @@ class copiar:
             
                      s3_client.download_file('bucket201907483', s3_key, local_file_path)
          except Exception as e:
+             #rcontenido("Error al copiar el archivo del bucket a local")
              print("Error al copiar el archivo del bucket a local:", str(e))
     
          
-c=copiar("/prueba1/","/carpeta1/","Server","Server")
-c.copiar_()
+#c=copiar("/prueba1/","/carpeta1/","Server","Server")
+#c.copiar_()

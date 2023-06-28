@@ -1,0 +1,38 @@
+from datetime import date
+
+class bitacora:
+ def __init__(self):
+     self.fecha=date.today()
+     self.crear_bitacora()
+     
+
+
+ 
+ def crear_bitacora(self):
+     ruta="./documento"
+     
+     ruta_acciones=ruta+"/"+"log_archivos.txt"
+     try:
+         archivo=open(ruta_acciones,'w')
+         archivo.close()
+     except:
+         print("no se pudo crear la bitacora")
+
+
+ def insertar_log(self,accion):
+    
+     ruta="./documento/log_archivos.txt"
+     
+     try:
+        #print("Bitacora encriptada")
+        #print("llave:   ",self.llave)
+        archivo=open(ruta,'a')
+        archivo.write(accion+"\n")
+        archivo.close()
+
+           
+     except:
+         print("no se pudo agregar el proceso a la bitacora")
+
+
+bit = bitacora()

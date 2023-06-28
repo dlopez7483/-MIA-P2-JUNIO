@@ -4,6 +4,7 @@ import boto3
 from botocore.client import Config
 import re
 import os
+
 s3_client = boto3.client(
     's3',
     aws_access_key_id='AKIAVUJFRDVN5ZXYPPVS',
@@ -47,6 +48,7 @@ class transfer:
              division=self.desde.split("/")
              s3_client.upload_file(str(ruta_archivo),'bucket201907483',"Archivos"+self.to+division[len(division)-1])
              ruta_archivo.unlink()
+             #rcontenido("Archivo copiado exitosamente de local a bucket.")
              print("Archivo copiado exitosamente de local a bucket.")
          else:
              for nombre_archivo in os.listdir(str(ruta_archivo)):
@@ -103,11 +105,13 @@ class transfer:
             
      else:
          if not existencia_desde:
+             #rcontenido("Error: La ruta de origen no existe.")
              print("La ruta de origen no existe.")
              print(ruta)
          
          if not existencia_to:
+             #rcontenido("Error: La ruta de destino no existe")
              print("La ruta de destino no existe.")
              print(t)
 
-t=transfer("/prueba1/","/prueba2/","Server","Server")
+#t=transfer("/prueba1/","/prueba2/","Server","Server")

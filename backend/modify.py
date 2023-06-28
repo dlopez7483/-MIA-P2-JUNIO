@@ -4,6 +4,7 @@ import boto3
 from botocore.client import Config
 import re
 import os
+
 s3_client = boto3.client(
     's3',
     aws_access_key_id='AKIAVUJFRDVN5ZXYPPVS',
@@ -26,9 +27,11 @@ class Modify:
              if re.search(r"\.txt$",root, re.I):
                   with open(root, 'w') as archivo:
                      archivo.write(self.body)
+                     #rcontenido("Archivo Modificado")
              archivo.close()
          else:
               print("Error en el path")
+              #rcontenido("Error en el path")
      elif self.type=="Bucket":
             response = s3_client.list_objects_v2(Bucket='bucket201907483', Prefix='Archivos'+self.path)
             existencia = response.get('Contents', [])
@@ -36,7 +39,9 @@ class Modify:
                 try:
                  s3_client.delete_object(Bucket='bucket201907483', Key='Archivos'+self.path)
                  s3_client.put_object(Body=self.body, Bucket='bucket201907483', Key='Archivos'+self.path)
+                 #rcontenido("Archivo modificado  en el bucket")
                 except Exception as e:
+                    #rcontenido("Error al modificar el archivo en el bucket")
                     print("Error al modificar el archivo en el bucket:", str(e))
             else:
                 print("Error en el path")
