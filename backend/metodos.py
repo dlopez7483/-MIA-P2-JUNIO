@@ -8,7 +8,6 @@ lista_usuarios = list()
 
 
 
-
 s3_client = boto3.client(
     's3',
     aws_access_key_id='AKIAVUJFRDVN5ZXYPPVS',
@@ -53,12 +52,7 @@ def validar(x,y):
 
 
 def leerarchivo():
-<<<<<<< HEAD
- archivo = s3_client.list_objects(Bucket='bucket201907483', Prefix='Archivos/usuarios.txt')
-=======
- archivo = s3.get_object(Bucket='bucket201907483', Key='miausuarios.txt')
- 
->>>>>>> main
+ archivo = s3_client.list_objects(Bucket='bucket201907483', Prefix='usuarios.txt')
     
  for linea in archivo['Body'].iter_lines():
      linea = linea.decode('utf-8')
@@ -87,9 +81,3 @@ def cargar_archivo(ruta):
      return False
 
 #------------------------------------------------------------
-contenidodevuelta = ''
-
-def agregarcontenido(datos):
-    global contenidodevuelta
-    
-    contenidodevuelta += datos + '\n'

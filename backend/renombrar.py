@@ -53,7 +53,7 @@ class renombrar:
                
                      os.rename(ruta, nuevo_directorio)
                  except:
-                      print("Error carpeta ya existe")
+                      return "Error al renombrar el archivo."
      elif self.type=="Bucket":
          try:
              div=self.path.split("/")
