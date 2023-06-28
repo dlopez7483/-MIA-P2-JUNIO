@@ -21,14 +21,11 @@ s3_client = boto3.client(
 
 
 
-<<<<<<< HEAD
-=======
 
 s3=boto3.client('s3',aws_access_key_id='AKIAVUJFRDVN5ZXYPPVS',
                    aws_secret_access_key='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',
                    config=Config(signature_version='s3v4'))
 
->>>>>>> main
 #------------------------------------validar_usuario------------------------------------
 
 def desencriptar_contra(linea,llave):
@@ -62,12 +59,8 @@ def validar(x,y):
 
 
 def leerarchivo():
-<<<<<<< HEAD
- archivo = s3_client.list_objects(Bucket='bucket201907483', Prefix='Archivos/usuarios.txt')
-=======
  archivo = s3.get_object(Bucket='bucket201907483', Key='miausuarios.txt')
  
->>>>>>> main
     
  for linea in archivo['Body'].iter_lines():
      linea = linea.decode('utf-8')
