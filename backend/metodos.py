@@ -69,6 +69,7 @@ def cargar_archivo(ruta):
  try: 
      #archivo = open(ruta, "r")
      archivo = ruta.split('\n')
+     
      for linea in archivo:
          print(linea)
          #a=analisis(linea.replace("\n", ""))
