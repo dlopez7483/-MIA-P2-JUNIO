@@ -4,6 +4,7 @@ import boto3
 from botocore.client import Config
 import re
 import os
+
 s3_client = boto3.client(
     's3',
     aws_access_key_id='AKIAVUJFRDVN5ZXYPPVS',
@@ -51,9 +52,8 @@ class renombrar:
                      nuevo_directorio = os.path.join(nombre_directorio,self.name)
                
                      os.rename(ruta, nuevo_directorio)
-                     return "Archivo "+self.path+" renombrado con éxito como "+self.name+"."
                  except:
-                     return "Error al renombrar el archivo."
+                      print("Error carpeta ya existe")
      elif self.type=="Bucket":
          try:
              div=self.path.split("/")

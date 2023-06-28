@@ -3,7 +3,8 @@ from flask_cors import CORS
 import boto3
 from botocore.client import Config
 from metodos import validar, cargar_archivo
-from analizador import analisis
+
+
 app = Flask(__name__)
 CORS(app)
 
@@ -29,15 +30,86 @@ def carga():
  contenido = request.form.get('contenido','')
  #ruta=request.json['ruta']
  if cargar_archivo(contenido):
-     return jsonify({"mensaje": "archivo cargado"})
+    
+     return jsonify({"mensaje": "hola"})
  else:
      return jsonify({"mensaje": "error al cargar el archivo"})  
 
-@app.route('/linea', methods=['POST'])
-def linea():
-    linea = request.json['linea']
-    a=analisis(linea)
-    return jsonify({"linea": a.iniciar_comandos()})
+
+@app.route('/create', methods=['POST'])
+def create():
+ name=request.json['name']
+ body=request.json['body']
+ path=request.json['path']
+ type=request.json['type']
+
+
+
+@app.route('/delete', methods=['DELETE'])
+def delete():
+ path=request.json['path']
+ name=request.json['name']
+ type=request.json['type']
+
+
+
+
+@app.route('/copy', methods=['POST'])
+def copiar():
+ from_=request.json['from']
+ to=request.json['to']
+ type_to=request.json['type_to']
+ type_from=request.json['type_from']
+
+
+@app.route('/transfer', methods=['POST'])
+def transferir():
+ from_=request.json['from']
+ to=request.json['to']
+ type_to=request.json['type_to']
+ type_from=request.json['type_from']
+
+
+@app.route('/Rename', methods=['PUT'])
+def rename():
+ path=request.json['path']
+ name=request.json['name']
+ type=request.json['type']
+
+
+@app.route('/modify', methods=['PUT'])
+def modify():
+ path=request.json['path']
+ type=request.json['type']
+ body=request.json['body']
+
+
+@app.route('/backup', methods=['POST'])
+def backup():
+ type_to=request.json['type_to']
+ type_from=request.json['type_from']
+ ip=request.json['ip']
+ port=request.json['port']
+
+
+@app.route('/Recovey', methods=['POST'])
+def recovey():
+ type_to=request.json['type_to']
+ type_from=request.json['type_from']
+ ip=request.json['ip']
+ port=request.json['port']
+ name=request.json['name']
+
+@app.route('/delete_all', methods=['DELETE'])
+def delete_all():
+ type=request.json['type']
+
+@app.route('/open', methods=['POST'])
+def abrir():
+ type=request.json['type']
+ ip=request.json['ip']
+ port=request.json['port']
+ name=request.json['name']
 
 
 

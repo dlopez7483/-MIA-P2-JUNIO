@@ -4,6 +4,7 @@ import boto3
 from botocore.client import Config
 
 
+
 s3_client = boto3.client(
     's3',
     aws_access_key_id='AKIAVUJFRDVN5ZXYPPVS',
@@ -30,6 +31,7 @@ class delete:
                      return "El archivo "+self.path+self.name+" no existe."
 
              except:
+                 #rcontenido("no se pudo eliminar el archivo")
                  print("no se pudo eliminar el archivo")   
          elif self.name=="":
              try:
@@ -66,6 +68,7 @@ class delete:
                          s3_client.delete_object(Bucket='bucket201907483', Key=objeto['Key'])
         
                  s3_client.delete_object(Bucket='bucket201907483', Key=ruta_archivo)
+                 #rcontenido("Carpeta" + self.path + "eliminada")
                  return "Carpeta" + self.path + "eliminada"
                      
             except:
