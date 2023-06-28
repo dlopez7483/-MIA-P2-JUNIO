@@ -96,6 +96,9 @@ class transfer:
                      dst_file = os.path.join(t, rel_path)
                      os.makedirs(os.path.dirname(dst_file), exist_ok=True)
                      shutil.copy2(src_file, dst_file)
+                     rut=Path(src_file)
+                     rut.unlink()
+                 
                      
             
      else:
