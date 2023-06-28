@@ -70,12 +70,18 @@ def ejecutar(request):
         #print(texto)
         url_flask = 'http://localhost:5000/carga_archivo'
         response = requests.post(url_flask, data={'contenido': texto})    
-        return response.text  
+        return redirect('venpri')
     
        
     
     return render(request, 'ventana_principal.html')
     
 
-
+def guardar_datos(request):
+    if request.method == 'POST':
+        datos = request.POST.get('datos', '')
+        # Guardar los datos en el contexto
+        context = {'datos_guardados': datos}
+        return render(request, 'formulario.html', context)
+    return render(request, 'formulario.html')
 
