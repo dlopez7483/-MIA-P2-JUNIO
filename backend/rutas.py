@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import boto3
 from botocore.client import Config
-from metodos import validar, cargar_archivo
+from metodos import validar, cargar_archivo,contenidodevuelta
 
 app = Flask(__name__)
 CORS(app)
@@ -29,7 +29,7 @@ def carga():
  contenido = request.form.get('contenido','')
  #ruta=request.json['ruta']
  if cargar_archivo(contenido):
-     return jsonify({"mensaje": "archivo cargado"})
+     return jsonify({"mensaje": contenidodevuelta})
  else:
      return jsonify({"mensaje": "error al cargar el archivo"})  
 

@@ -5,6 +5,8 @@ import boto3
 from botocore.client import Config
 from analizador import analisis
 lista_usuarios = list()
+global contenidodevuelta
+contenidodevuelta = ""
 
 
 
