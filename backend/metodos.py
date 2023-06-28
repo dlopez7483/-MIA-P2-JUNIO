@@ -61,7 +61,7 @@ def validar(x,y):
 
 def leerarchivo():
 <<<<<<< HEAD
- archivo = s3_client.list_objects(Bucket='bucket201907483', Prefix='Archivos/usuarios.txt')
+
 =======
  archivo = s3.get_object(Bucket='bucket201907483', Key='miausuarios.txt')
  
