@@ -6,9 +6,13 @@ import requests
 # Create your views here.
 
 def home(request):
+    
     return render(request,'home.html')
 
-
+def otra_pagina_view(request):
+    return render(request,'login.html',{
+            'form': AuthenticationForm
+        })
 
 def login(request):
 

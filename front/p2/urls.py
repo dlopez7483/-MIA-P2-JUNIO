@@ -21,6 +21,7 @@ from principal import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home, name='home'),
+    path('log/', views.otra_pagina_view, name='otra-pagina'),
     path('login/',views.login,name='login'),
     path('venpri/',views.abrir_archivo, name='venpri'),
     path('ejecutar/',views.ejecutar, name='ejecutar'),
