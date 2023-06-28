@@ -1,1 +1,17 @@
-FROM Python3: 3.10.6
+FROM alpine:3.10
+
+RUN apk --no cache add python3-dev \
+    && pip3 install --upgrade pip
+
+
+WORKDIR /app
+
+COPY . /app
+
+
+RUN pip3 --no-cache-dir install -r requirements.txt
+
+
+CMD [ "python3","backend/rutas.py" ]
+
+

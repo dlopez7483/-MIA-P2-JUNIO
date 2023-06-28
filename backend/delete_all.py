@@ -31,7 +31,7 @@ class delete_all:
                      shutil.rmtree(ruta_completa_origen)
              return "Archivos del server eliminados con éxito."    
          except FileNotFoundError:
-             print("La carpeta no existe")
+             return "La carpeta "+self.path+" no existe."
      elif self.type=="Bucket":
          response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos/")
          
