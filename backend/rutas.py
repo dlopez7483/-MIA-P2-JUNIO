@@ -17,9 +17,11 @@ def login():
  usurio=request.json['usurio']
  contrasenia=request.json['contrasenia']
  if validar(usurio,contrasenia):
-     return jsonify({"mensaje": "aceptado"})
+     bandera = True
+     return jsonify({"bandera_log": bandera})
  else:
-     return jsonify({"mensaje": "rechazado"})
+     bandera = False
+     return jsonify({"bandera_log": bandera})
 
 
 @app.route('/carga_archivo', methods=['POST'])

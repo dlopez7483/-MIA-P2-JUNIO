@@ -29,11 +29,16 @@ def login(request):
             'usurio': user,
             'contrasenia': password,}
          respuesta = requests.post('http://localhost:5000/login', json=datos)
-         if respuesta == True:
-             print(user, password)
-             return redirect('venpri')
 
-         elif respuesta == False:
+        
+         resp = respuesta.json()
+         mensaje = resp['bandera_log']
+         
+         if mensaje == True:
+             print(user, password)
+             return render(request, 'ventana_principal.html')
+
+         elif mensaje == False:
                  
             return render(request,'login.html',{
                 'form': AuthenticationForm,

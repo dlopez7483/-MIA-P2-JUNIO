@@ -14,7 +14,7 @@ lista_usuarios = list()
 
 
 
-s3=boto3.resource('s3',aws_access_key_id='AKIAVUJFRDVN5ZXYPPVS',
+s3=boto3.client('s3',aws_access_key_id='AKIAVUJFRDVN5ZXYPPVS',
                    aws_secret_access_key='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',
                    config=Config(signature_version='s3v4'))
 
@@ -51,13 +51,14 @@ def validar(x,y):
 
 
 def leerarchivo():
- archivo = s3.list_objects(Bucket='bucket201907483', Prefix='Archivos/usuarios.txt')
+ archivo = s3.get_object(Bucket='bucket201907483', Key='miausuarios.txt')
+ 
     
  for linea in archivo['Body'].iter_lines():
      linea = linea.decode('utf-8')
      lista_usuarios.append(linea.replace("\n", ""))
 
- archivo.close()
+ 
 #--------------------------------------------------------------------
 
 
