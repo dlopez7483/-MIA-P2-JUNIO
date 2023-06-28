@@ -47,16 +47,18 @@ class transfer:
              division=self.desde.split("/")
              s3_client.upload_file(str(ruta_archivo),'bucket201907483',"Archivos"+self.to+division[len(division)-1])
              ruta_archivo.unlink()
-             print("Archivo copiado exitosamente de local a bucket.")
+             return "Archivo "+self.desde+" transferido exitosamente de local a bucket."
          else:
              for nombre_archivo in os.listdir(str(ruta_archivo)):
                  ruta_completa_origen = os.path.join(str(ruta_archivo), nombre_archivo)
                  if os.path.isfile(ruta_completa_origen):
                      s3_client.upload_file(str(ruta_completa_origen),'bucket201907483', 'Archivos'+self.to+nombre_archivo)
                      os.remove(ruta_completa_origen)
+                   
                  else:
                      self.carpetas(ruta_completa_origen,'Archivos'+self.to,nombre_archivo)
                      shutil.rmtree(ruta_completa_origen)
+             return "Archivo "+self.desde+" transferido exitosamente de local a bucket."
                  
 
  def carpetas(self,ruta_completa_origen,to,nombre_archivo):
@@ -138,7 +140,7 @@ class transfer:
               return "La ruta "+self.desde+" de origen no existe."
          
          if not existencia2:
-             print("La ruta "+self.to+" de destino no existe.")
+             return "La ruta "+self.to+" de destino no existe."
 
 
 
@@ -153,6 +155,7 @@ class transfer:
              if re.search(r"\.txt$", self.desde, re.I):
                  s3_client.download_file('bucket201907483',"Archivos"+self.desde,str(ruta_archivo))
                  s3_client.delete_object(Bucket='bucket201907483', Key="Archivos"+self.desde)
+                 return "Archivo "+self.desde+" transferido exitosamente de bucket a local."
              else:
                  response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos"+self.desde)
     
@@ -166,7 +169,8 @@ class transfer:
             
                      s3_client.download_file('bucket201907483', s3_key, local_file_path)
                      s3_client.delete_object(Bucket='bucket201907483', Key=s3_key)
+                 return "Archivo "+self.desde+" transferido exitosamente de bucket a local."
          except Exception as e:
-             print("Error al copiar el archivo del bucket a local:", str(e))
+             return "Error al transferir el archivo del bucket a local:", str(e)
 
 t=transfer("/p/","/transfer/","Server","Bucket")
