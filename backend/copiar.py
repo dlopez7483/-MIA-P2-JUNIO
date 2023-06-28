@@ -23,7 +23,7 @@ class copiar:
      self.to=to
      self.type_to=type_to
      self.type_from=type_from
-     self.copiar_()
+
 
  def copiar_(self):
      if(self.type_to=="Server" and self.type_from=="Server"):
@@ -74,24 +74,42 @@ class copiar:
      ruta_archivo = Path(root+self.desde)
      if ruta_archivo.exists() and existencia:
          if re.search(r"\.txt$", self.desde, re.I):
-             s3_client.upload_file(ruta_archivo,'bucket201907483',root+self.to)
+             division=self.desde.split("/")
+             s3_client.upload_file(str(ruta_archivo),'bucket201907483',"Archivos"+self.to+division[len(division)-1])
+          
+             print("Archivo copiado exitosamente de local a bucket.")
          else:
-             for root, dirs, files in os.walk(root+self.desde):
-                 for file in files:
-                     ruta_archivo_local = os.path.join(root, file)
-                     ruta_archivo_bucket = os.path.join('Archivos'+self.to, os.path.relpath(ruta_archivo_local,root+self.desde))
-                     try:
-                         s3_client.upload_file(ruta_archivo_local,'bucket201907483', ruta_archivo_bucket)
-                         print("Archivo copiado exitosamente de local a bucket.")
-                     except Exception as e:
-                         print(str(e))
+             for nombre_archivo in os.listdir(str(ruta_archivo)):
+                 ruta_completa_origen = os.path.join(str(ruta_archivo), nombre_archivo)
+                 if os.path.isfile(ruta_completa_origen):
+                     s3_client.upload_file(str(ruta_completa_origen),'bucket201907483', 'Archivos'+self.to+nombre_archivo)
+                 else:
+                     self.carpetas(ruta_completa_origen,'Archivos'+self.to,nombre_archivo)
+                 
 
+ def carpetas(self,ruta_completa_origen,to,nombre_archivo):
+     print("entro")
+     if os.path.isfile(ruta_completa_origen):
+         s3_client.upload_file(str(ruta_completa_origen),'bucket201907483',to+nombre_archivo)
+     else:
+         print("aaaaa")
+         for nombre_archivo2 in os.listdir(str(ruta_completa_origen)):
+             ruta_completa_origen2 = os.path.join(str(ruta_completa_origen), nombre_archivo2)
+             if os.path.isfile(ruta_completa_origen2):
+                 s3_client.upload_file(str(ruta_completa_origen2),'bucket201907483',to+nombre_archivo+'/'+nombre_archivo2)
+             else:
+                 
+                 self.carpetas(ruta_completa_origen2,to+nombre_archivo,nombre_archivo2)
+ 
+ 
+ 
  def copiar_server_server(self):
      ruta=str(Path.home()/'Archivos')
-     fro = os.path.join(ruta, self.desde)
-     t = os.path.join(ruta, self.to)
-     existencia_desde = os.path.exists(fro)
-     existencia_to = os.path.exists(t)
+     fro = ruta+ self.desde
+     t = ruta+ self.to
+
+     existencia_desde = os.path.exists(str(fro))
+     existencia_to = os.path.exists(str(t))
 
      if existencia_desde and existencia_to:
          if re.search(r"\.txt$", self.desde, re.I):
@@ -110,9 +128,11 @@ class copiar:
      else:
          if not existencia_desde:
              print("La ruta de origen no existe.")
+             print(ruta)
          
          if not existencia_to:
              print("La ruta de destino no existe.")
+             print(t)
 
  def copiar_bucket_server(self):
      response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos"+self.desde)
@@ -125,14 +145,20 @@ class copiar:
                  s3_client.download_file('bucket201907483',"Archivos"+self.desde,str(ruta_archivo))
                  print("Archivo copiado exitosamente del bucket a local.")
              else:
-                 response = s3_client.list_objects_v2(Bucket='bucket201907483', Prefix='Archivos'+self.desde)
+                 response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos"+self.desde)
+    
                  for obj in response['Contents']:
-                     ruta_objeto_origen = obj['Key']
-                     ruta_objeto_destino = root+self.to + ruta_objeto_origen[len('Archivos'+self.desde):]
-                     s3_client.download_file('bucket201907483', ruta_objeto_origen, ruta_objeto_destino)
-                     print("Archivo copiado exitosamente del bucket a local.")
+                     s3_key = obj['Key']
+                     local_file_path = os.path.join(ruta_archivo, s3_key[len("Archivos"+self.desde):])
+        
+                     if not os.path.exists(os.path.dirname(local_file_path)):
+                         os.makedirs(os.path.dirname(local_file_path))
+        
+            
+                     s3_client.download_file('bucket201907483', s3_key, local_file_path)
          except Exception as e:
              print("Error al copiar el archivo del bucket a local:", str(e))
     
          
-                     
+c=copiar("/prueba1/","/carpeta1/","Server","Server")
+c.copiar_()

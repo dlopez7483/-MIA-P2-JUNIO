@@ -16,7 +16,7 @@ class delete:
      self.path=path
      self.name=name
      self.type=type
-     self.eliminar()
+   
  def eliminar(self):
      if self.type=="Server":
          root=str(Path.home()/'Archivos')
@@ -47,8 +47,8 @@ class delete:
             try:
                 if self.name!="":
                  ruta_archivo = "Archivos"+self.path+self.name
-                
                  s3_client.delete_object(Bucket='bucket201907483', Key=ruta_archivo)
+               
                  print("Archivo eliminado con éxito.")
                 else:
                      
@@ -66,10 +66,9 @@ class delete:
                          s3_client.delete_object(Bucket='bucket201907483', Key=objeto['Key'])
         
                  s3_client.delete_object(Bucket='bucket201907483', Key=ruta_archivo)
+                 return "Carpeta" + self.path + "eliminada"
                      
             except:
              print("no se pudo eliminar el archivo")
              
 
-
-#d=delete("/p/p1/p2/","","Bucket")

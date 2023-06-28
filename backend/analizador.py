@@ -34,7 +34,7 @@ class analizador:
 class analisis:
  def __init__(self,linea):
      self.linea=linea
-     self.iniciar_comandos()
+   
  def iniciar_comandos(self):
      a=analizador(self.linea)
      ins=a.instruccion()
@@ -60,9 +60,9 @@ class analisis:
                      type="Bucket"
          if(name!="" and body!="" and type!="" and path!=""):
              c=Create(name,body,type,path)
-             
+             return c.crear()
          else:
-             print("Error en los parametros")
+             return "Error en los parametros de crear"
      elif(re.match("Delete",ins,re.I)):
          path=""
          name=""

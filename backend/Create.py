@@ -15,7 +15,7 @@ class Create:
         self.body = body
         self.type = type
         self.path = path
-        self.crear()
+        
 
     def crear(self):
         if self.type == "Server":
@@ -33,17 +33,16 @@ class Create:
                 archivo = open(ruta_archivo, 'w')
                 archivo.write(self.body)
                 archivo.close()
+                return "Archivo" + self.path + self.name + "creado"
             except Exception as e:
-                print("No se pudo crear el archivo:", str(e))
+               return "No se pudo crear el archivo:", str(e)
 
         elif self.type == "Bucket":
             ruta_archivo = "Archivos" + self.path + self.name
             try:
                 s3_client.put_object(Body=self.body, Bucket='bucket201907483', Key=ruta_archivo)
-                print("Archivo creado en el bucket")
+                return "Archivo" + self.path + self.name + "creado"
             except Exception as e:
-                print("No se pudo crear el archivo en el bucket:", str(e))
+                 return "No se pudo crear el archivo:", str(e)
 
 
-
-#c=Create("hola3.txt","hola","Bucket","/p/p1/")
