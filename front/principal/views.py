@@ -78,7 +78,7 @@ def ejecutar(request):
         texto = request.POST.get('contenido_entrada', '')
         print("ejecutando")
         #print(texto)
-        url_flask = 'http://52.15.136.186:5000/carga_archivo'
+        url_flask = 'http://localhost:5000/carga_archivo'
         #'http://localhost:5000/carga_archivo'
         response = requests.post(url_flask, data={'contenido': texto})    
         return redirect('venpri')

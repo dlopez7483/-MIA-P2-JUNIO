@@ -1,10 +1,10 @@
 from datetime import date, datetime
 from pathlib import Path
-import time
-import base64
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
 
+global lista_datos
+lista_datos = list()
 
 
 
@@ -14,6 +14,10 @@ class bitacora:
      self.crear_bitacora()
      
 
+ def retornardatos(self, datos):
+     lista_datos.append(datos + "\n")
+     
+     
 
  def crear_bitacora(self):
      ruta="./documento/logs/"

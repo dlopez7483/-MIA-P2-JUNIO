@@ -4,6 +4,7 @@ import boto3
 from botocore.client import Config
 from metodos import validar, cargar_archivo
 from analizador import analisis
+from bitacora import lista_datos
 app = Flask(__name__)
 CORS(app)
 
@@ -29,9 +30,15 @@ def carga():
  contenido = request.form.get('contenido','')
  #ruta=request.json['ruta']
  if cargar_archivo(contenido):
+     
      return jsonify({"mensaje": "archivo cargado"})
  else:
      return jsonify({"mensaje": "error al cargar el archivo"})  
+
+@app.route('/devolver', methods=['GET'])
+def devolver():
+    
+    return jsonify({'message': lista_datos})
 
 @app.route('/linea', methods=['POST'])
 def linea():

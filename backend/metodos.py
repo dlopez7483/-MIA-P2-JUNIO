@@ -4,6 +4,8 @@ from Crypto.Util.Padding import pad,unpad
 import boto3
 from botocore.client import Config
 from analizador import analisis
+from bitacora import lista_datos
+from flask import jsonify
 lista_usuarios = list()
 
 
@@ -75,7 +77,10 @@ def cargar_archivo(ruta):
          print("comando: ",linea)
          #a=analisis(linea.replace("\n", ""))
          a=analisis(linea)
-         a.iniciar_comandos()
+         #a.iniciar_comandos()
+        
+         lista_datos.append(a.iniciar_comandos())
+         #bb.lista_datos.append(jsonify({'message':a.iniciar_comandos()}))
      #archivo.close()
      return True
  except:
