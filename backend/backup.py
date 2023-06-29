@@ -87,6 +87,6 @@ class backup:
      
 
           
-c=backup("Bucket","Server","","","champion")
+#c=backup("Bucket","Server","","","champion")
      
      

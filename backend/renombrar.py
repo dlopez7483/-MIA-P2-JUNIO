@@ -4,7 +4,7 @@ import boto3
 from botocore.client import Config
 import re
 import os
-
+from bitacora import bit 
 s3_client = boto3.client(
     's3',
     aws_access_key_id='AKIAVUJFRDVN5ZXYPPVS',
@@ -36,8 +36,10 @@ class renombrar:
                      nueva_ruta = os.path.join(nombre_directorio, nuevo_nombre_archivo)
                 
                      os.rename(ruta, nueva_ruta)
+                     bit.insertar_log("Archivo "+self.path+" renombrado con éxito como "+self.name+".")
                      return "Archivo "+self.path+" renombrado con éxito como "+self.name+"."
                  except:
+                     bit.insertar_log("Error al renombrar el archivo." )
                      return "Error al renombrar el archivo."  
              else:
                  try:
@@ -53,6 +55,7 @@ class renombrar:
                
                      os.rename(ruta, nuevo_directorio)
                  except:
+                      bit.insertar_log("Error al renombrar el archivo." )
                       return "Error al renombrar el archivo."
      elif self.type=="Bucket":
          try:
@@ -64,7 +67,9 @@ class renombrar:
 
              s3_client.copy_object(Bucket='bucket201907483', CopySource={'Bucket': 'bucket201907483', 'Key': 'Archivos'+self.path}, Key='Archivos'+cadena+self.name)
              s3_client.delete_object(Bucket='bucket201907483', Key='Archivos'+self.path)
+             bit.insertar_log("Archivo "+self.path+" renombrado con éxito como "+self.name+".")
              return "Archivo "+self.path+" renombrado con éxito como "+self.name+"."
          except Exception as e:
+             bit.insertar_log("Error al renombrar el archivo en el bucket" )
              return "Error al renombrar el archivo en el bucket:", str(e)
             

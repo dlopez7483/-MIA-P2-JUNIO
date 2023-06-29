@@ -29,6 +29,7 @@ def login(request):
             'usurio': user,
             'contrasenia': password,}
          respuesta = requests.post('http://localhost:5000/login', json=datos)
+         #'http://52.15.136.186:5000'
 
         
          resp = respuesta.json()
@@ -78,6 +79,7 @@ def ejecutar(request):
         print("ejecutando")
         #print(texto)
         url_flask = 'http://localhost:5000/carga_archivo'
+        #'http://localhost:5000/carga_archivo'
         response = requests.post(url_flask, data={'contenido': texto})    
         return redirect('venpri')
     

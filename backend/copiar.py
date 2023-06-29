@@ -4,7 +4,7 @@ import os
 import boto3
 from pathlib import Path
 from botocore.client import Config
-import metodos
+from bitacora import bit 
 
 
 
@@ -56,6 +56,7 @@ class copiar:
          try:
             if re.search(r"\.txt$", self.desde, re.I):
                  s3_client.copy_object(Bucket='bucket201907483', CopySource={'Bucket': 'bucket201907483', 'Key': 'Archivos'+self.desde}, Key='Archivos'+self.to)
+                 bit.insertar_log("Archivo "+self.desde+" copiado exitosamente de bucket a bucket.")
                  return "Archivo "+self.desde+" copiado exitosamente de bucket a bucket."
             else:
              response = s3_client.list_objects_v2(Bucket='bucket201907483', Prefix='Archivos'+self.desde)
@@ -68,14 +69,18 @@ class copiar:
                  Key=ruta_objeto_destino
                  )
                  print("copiado exitosamente de bucket a bucket")
+             bit.insertar_log("Archivo "+self.desde+" copiado exitosamente de bucket a bucket.")    
              return "Archivos "+self.to+" copiados exitosamente de bucket a bucket."
          except Exception as e:
+             bit.insertar_log("Error al copiar el archivo del bucket a bucket:"+ str(e))
              return "Error al copiar el archivo del bucket a bucket:", str(e)
      else:
             if not existencia2:
+             bit.insertar_log("La ruta"+self.desde+" de origen no existe.")
              return "La ruta"+self.desde+" de origen no existe."
             
             if not existencia:
+             bit.insertar_log("La ruta"+self.to+" de destino no existe.")
              return "La ruta"+self.to+" de destino no existe."
           
              
@@ -91,24 +96,29 @@ class copiar:
              s3_client.upload_file(str(ruta_archivo),'bucket201907483',"Archivos"+self.to+division[len(division)-1])
             
              #rcontenido("Archivo copiado exitosamente de local a bucket.")
+             bit.insertar_log("Archivo copiado exitosamente de local a bucket.")
              print("Archivo copiado exitosamente de local a bucket.")
          else:
              for nombre_archivo in os.listdir(str(ruta_archivo)):
                  ruta_completa_origen = os.path.join(str(ruta_archivo), nombre_archivo)
                  if os.path.isfile(ruta_completa_origen):
                      s3_client.upload_file(str(ruta_completa_origen),'bucket201907483', 'Archivos'+self.to+nombre_archivo)
+                     bit.insertar_log("Archivos "+self.to+" copiados exitosamente de local a bucket.")
                      return "Archivos "+self.to+" copiados exitosamente de local a bucket."
                  else:
                      self.carpetas(ruta_completa_origen,'Archivos'+self.to,nombre_archivo)
+                     bit.insertar_log("Archivos "+self.to+" copiados exitosamente de local a bucket.")
                      return "Archivos "+self.to+" copiados exitosamente de local a bucket."
      else:
             if not ruta_archivo.exists():
+                bit.insertar_log("La ruta"+self.desde+" de origen no existe.")
                 return "La ruta"+self.desde+" de origen no existe."
             if not existencia:
+                bit.insertar_log("La ruta"+self.to+" de destino no existe.")
                 return "La ruta"+self.to+" de destino no existe."          
 
  def carpetas(self,ruta_completa_origen,to,nombre_archivo):
-     print("entro")
+     #print("entro")
      if os.path.isfile(ruta_completa_origen):
          s3_client.upload_file(str(ruta_completa_origen),'bucket201907483',to+nombre_archivo)
      else:
@@ -144,14 +154,18 @@ class copiar:
                      dst_file = os.path.join(t, rel_path)
                      os.makedirs(os.path.dirname(dst_file), exist_ok=True)
                      shutil.copy2(src_file, dst_file)
+             bit.insertar_log("Archivo"+self.desde+" copiado exitosamente hacia "+self.to+" de local a local.")        
              return "Archivo"+self.desde+" copiado exitosamente hacia "+self.to+" de local a local."
                 
      else:
          if not existencia_desde:
+             bit.insertar_log("La ruta de origen no existe.")        
+
              print("La ruta de origen no existe.")
              print(ruta)
          
          if not existencia_to:
+             bit.insertar_log("La ruta de destino no existe.")
              print("La ruta de destino no existe.")
              print(t)
 
@@ -177,10 +191,12 @@ class copiar:
         
             
                      s3_client.download_file('bucket201907483', s3_key, local_file_path)
+                 bit.insertar_log("Archivo "+self.desde+" copiado exitosamente de bucket a local.")    
                  return "Archivo "+self.desde+" copiado exitosamente de bucket a local."
          except Exception as e:
+             bit.insertar_log("Archivo "+self.desde+" copiado exitosamente de bucket a local.")
              print("Error al copiar el archivo del bucket a local:", str(e))
     
          
-c=copiar("/prueba1/","/carpeta1/","Server","Server")
-c.copiar_()
+#c=copiar("/prueba1/","/carpeta1/","Server","Server")
+#c.copiar_()

@@ -52,13 +52,13 @@ def validar(x,y):
 
 
 def leerarchivo():
- archivo = s3_client.list_objects(Bucket='bucket201907483', Prefix='usuarios.txt')
+ archivo = s3_client.get_object(Bucket='bucket201907483', Key='miausuarios.txt')
     
  for linea in archivo['Body'].iter_lines():
      linea = linea.decode('utf-8')
      lista_usuarios.append(linea.replace("\n", ""))
 
- archivo.close()
+
 #--------------------------------------------------------------------
 
 
@@ -72,9 +72,10 @@ def cargar_archivo(ruta):
      archivo = ruta.split('\n')
      
      for linea in archivo:
-         print(linea)
+         print("comando: ",linea)
          #a=analisis(linea.replace("\n", ""))
          a=analisis(linea)
+         a.iniciar_comandos()
      #archivo.close()
      return True
  except:

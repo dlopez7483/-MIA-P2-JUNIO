@@ -115,4 +115,4 @@ class transfer:
              print("La ruta de destino no existe.")
              print(t)
 
-t=transfer("/prueba1/","/prueba2/","Server","Server")
+#t=transfer("/prueba1/","/prueba2/","Server","Server")
