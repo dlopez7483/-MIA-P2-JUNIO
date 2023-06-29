@@ -6,11 +6,11 @@ import re
 import os
 
 s3_client = boto3.client(
-    's3',
-    aws_access_key_id='AKIAVUJFRDVN5ZXYPPVS',
-    aws_secret_access_key='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',
-    config=Config(signature_version='s3v4')
-)
+     's3',
+     aws_access_key_id='AKIAVUJFRDVNRXAMFOH6',
+     aws_secret_access_key='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',
+     config=Config(signature_version='s3v4')
+     )
 
 
 

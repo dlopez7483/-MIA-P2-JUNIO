@@ -81,6 +81,7 @@ class analisis:
                      type="Bucket"
          if(path!="" and type!=""):
              d=delete(path,name,type)
+             return d.eliminar()
          else:
              return "Error en los parametros de eliminar"
      elif(re.match("Copy",ins,re.I)):
@@ -150,7 +151,7 @@ class analisis:
 
          if(path!="" and name!="" and type!=""):
              r=renombrar(path,name,type)
-             return r.renombrar()
+             return r.renombrar_()
          else:
              return "Error en los parametros de renombrar"
      elif(re.match("Modify",ins,re.I)):
@@ -238,7 +239,7 @@ class analisis:
                      type="Bucket"
          if(type!=""):
              d=delete_all(type)
-             return d.delete_all_()
+             return d.eliminar()
          else:
              return "Error en los parametros de eliminar todo"
      elif(re.match("Open",ins,re.I)):
@@ -267,5 +268,6 @@ class analisis:
          return "Error en la instrucción."
 
               
-        
+a=analisis("copy -from->/carpeta_calificacion1/ -to->/\"carpeta ejemplo\"/ -type_to->server -type_from->server")
+print(a.iniciar_comandos())        
      

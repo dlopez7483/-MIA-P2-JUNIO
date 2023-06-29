@@ -6,11 +6,11 @@ import re
 import os
 
 s3_client = boto3.client(
-    's3',
-    aws_access_key_id='AKIAVUJFRDVN5ZXYPPVS',
-    aws_secret_access_key='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',
-    config=Config(signature_version='s3v4')
-)
+     's3',
+     aws_access_key_id='AKIAVUJFRDVNRXAMFOH6',
+     aws_secret_access_key='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',
+     config=Config(signature_version='s3v4')
+     )
 
 
 
@@ -33,12 +33,39 @@ class recovery:
                          ruta_completa_origen = os.path.join(str(ruta_archivo), nombre_archivo)
                          if os.path.isfile(ruta_completa_origen):
                              s3_client.upload_file(str(ruta_completa_origen),'bucket201907483', 'Archivos')
+                             return "Recover "+self.name+" realizado exitosamente en el Bucket"
                          else:
                              self.server_bucket_propio_carpetas(ruta_completa_origen,nombre_archivo)
                  else:
-                     print("El archivo no existe.")
+                     return "El archivo "+self.name+" no existe."
                 except:
-                    print("no se pudo subir el archivo") 
+                    return "No se pudo realizar el recover en el Bucket"
+
+         elif self.type_from=="Bucket" and self.type_to=="Server":
+             response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos/"+self.name+"/")
+             existencia = response.get('Contents', [])
+             root=str(Path.home()/'Archivos')
+    
+             ruta_archivo = Path(root)
+             response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos/"+self.name+"/")
+             for obj in response['Contents']:
+                 s3_key = obj['Key']
+                 print(s3_key)
+                 local_file_path = os.path.join(ruta_archivo, s3_key[len("Archivos/"+self.name+"/"):])
+        
+        
+                 if not os.path.exists(os.path.dirname(local_file_path)):
+                      os.makedirs(os.path.dirname(local_file_path))
+                 try:
+                     s3_client.download_file('bucket201907483', s3_key, local_file_path)
+                     return "Recover "+self.name+" realizado exitosamente en el Servidor"
+                 except:
+                     return "No se pudo realizar el recovery en el Servidor"
+           
+
+
+
+
  def server_bucket_propio_carpetas(self,ruta_completa_origen,nombre_archivo):
      if os.path.isfile(ruta_completa_origen):
             s3_client.upload_file(str(ruta_completa_origen),'bucket201907483', 'Archivos/'+self.name+'/'+nombre_archivo)
