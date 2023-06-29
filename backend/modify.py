@@ -21,7 +21,7 @@ class Modify:
      self.modificar()
  def modificar(self):
      if self.type=="Server":
-         root=str(Path.home()/'Archivos')+self.path
+         root=str(os.getcwd()/'Archivos')+self.path
          path_correcto=os.path.exists(root)
          if(path_correcto):
              if re.search(r"\.txt$",root, re.I):

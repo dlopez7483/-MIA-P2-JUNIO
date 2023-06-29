@@ -22,7 +22,7 @@ class renombrar:
 
  def renombrar_(self):
      if self.type=="Server":
-         ruta=str(Path.home()/'Archivos')+self.path
+         ruta=str(os.getcwd()/'Archivos')+self.path
          existencia_path = os.path.exists(ruta)
          if(existencia_path):
              if re.search(r"\.txt$",ruta, re.I):

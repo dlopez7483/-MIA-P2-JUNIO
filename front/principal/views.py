@@ -28,7 +28,7 @@ def login(request):
          datos = {
             'usurio': user,
             'contrasenia': password,}
-         respuesta = requests.post('http://52.15.136.186:5000/login', json=datos)
+         respuesta = requests.post('http://localhost:5000/login', json=datos)
          #'http://52.15.136.186:5000'
          #'http://localhost:5000/login'
         

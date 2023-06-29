@@ -24,7 +24,7 @@ class backup:
  def backup_(self):
      if self.port=="" and self.ip=="":
          if self.type_from=="Bucket" and self.type_to=="Server":
-             ruta = Path(str(Path.home() / 'Archivos')+"/"+self.name+"/")
+             ruta = Path(str(os.getcwd() / 'Archivos')+"/"+self.name+"/")
              if not ruta.exists():
                  ruta.mkdir(parents=True)
              return self.copiar_bucket_server()
@@ -34,7 +34,7 @@ class backup:
  def copiar_bucket_server(self):
      response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos/")
      existencia = response.get('Contents', [])
-     root=str(Path.home()/'Archivos')
+     root=str(os.getcwd()/'Archivos')
     
      ruta_archivo = Path(root+"/"+self.name+"/")
      response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos/")
@@ -56,7 +56,7 @@ class backup:
  def copiar_server_bucket(self):
      response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos/")
      existencia = response.get('Contents', [])
-     root=str(Path.home()/'Archivos')
+     root=str(os.getcwd()/'Archivos')
      ruta_archivo = Path(root)
      if ruta_archivo.exists() and existencia:
          try:

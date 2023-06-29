@@ -41,7 +41,7 @@ class transfer:
  def transfer_server_bucket(self):
      response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos"+self.to)
      existencia = response.get('Contents', [])
-     root=str(Path.home()/'Archivos')
+     root=str(os.getcwd()/'Archivos')
      ruta_archivo = Path(root+self.desde)
      if ruta_archivo.exists() and existencia:
          if re.search(r"\.txt$", self.desde, re.I):
@@ -77,7 +77,7 @@ class transfer:
                  self.carpetas(ruta_completa_origen2,to+nombre_archivo,nombre_archivo2)
 
  def transfer_server_server(self): 
-     ruta=str(Path.home()/'Archivos')
+     ruta=str(os.getcwd()/'Archivos')
      fro = ruta+ self.desde
      t = ruta+ self.to
 

@@ -2,8 +2,8 @@ from pathlib import Path
 import shutil
 import boto3
 from botocore.client import Config
-
-
+import os
+from bitacora import bit 
 
 s3_client = boto3.client(
      's3',
@@ -24,7 +24,7 @@ class delete:
    
  def eliminar(self):
      if self.type=="Server":
-         root=str(Path.home()/'Archivos')
+         root=str(os.getcwd()/'Archivos')
          if self.name!="":
              try:
                  ruta_archivo = Path(root+self.path+self.name)

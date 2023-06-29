@@ -267,7 +267,3 @@ class analisis:
      else:
          return "Error en la instrucción."
 
-              
-a=analisis("copy -from->/carpeta_calificacion1/ -to->/\"carpeta ejemplo\"/ -type_to->server -type_from->server")
-print(a.iniciar_comandos())        
-     

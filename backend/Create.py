@@ -2,7 +2,7 @@ from pathlib import Path
 import boto3
 from botocore.client import Config
 from bitacora import bit 
-
+import os
 
 s3_client = boto3.client(
      's3',
@@ -22,7 +22,7 @@ class Create:
     def crear(self):
         if self.type == "Server":
          carpetas = self.path.split("/")
-         cadena = str(Path.home() / 'Archivos') + "/"
+         cadena = str(os.getcwd() / 'Archivos') + "/"
          for i in range(1, len(carpetas) - 1):
              cadena += carpetas[i] + "/"
              ruta = Path(cadena)
