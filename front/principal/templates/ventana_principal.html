@@ -109,7 +109,11 @@ textarea {
     <input type="submit" id="btnejecutar" value="EJECUTAR">
   </form>
     <br>
-    <textarea id="texto-respuesta"></textarea> 
+    <textarea id="texto-respuesta">
+      {% for dato in datos_flask %}
+          {{ dato }}
+      {% endfor %}
+  </textarea> 
 </body>
 </html>
 

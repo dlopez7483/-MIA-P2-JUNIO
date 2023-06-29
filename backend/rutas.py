@@ -31,14 +31,19 @@ def carga():
  #ruta=request.json['ruta']
  if cargar_archivo(contenido):
      
-     return jsonify({"mensaje": "archivo cargado"})
+     return jsonify({"datos_retorno": 'mensaje'})
  else:
      return jsonify({"mensaje": "error al cargar el archivo"})  
 
 @app.route('/devolver', methods=['GET'])
 def devolver():
     
-    return jsonify({'message': lista_datos})
+    return jsonify(lista_datos = lista_datos)
+
+@app.route('/devolverdatos')
+def devolverdatos():
+    
+    return jsonify(lista_datos = lista_datos)
 
 @app.route('/linea', methods=['POST'])
 def linea():
