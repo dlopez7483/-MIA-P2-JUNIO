@@ -74,13 +74,16 @@ def cargar_archivo(ruta):
      archivo = ruta.split('\n')
      
      for linea in archivo:
-         print("comando: ",linea)
-         #a=analisis(linea.replace("\n", ""))
-         a=analisis(linea)
+         try:
+             print("comando: ",linea)
+             #a=analisis(linea.replace("\n", ""))
+             a=analisis(linea)
          #a.iniciar_comandos()
         
-         lista_datos.append(a.iniciar_comandos())
+             lista_datos.append(a.iniciar_comandos())
          #bb.lista_datos.append(jsonify({'message':a.iniciar_comandos()}))
+         except Exception:
+             print("Error en la linea: ",linea)
      #archivo.close()
      return True
  except:

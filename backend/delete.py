@@ -75,7 +75,7 @@ class delete:
                  #rcontenido("Carpeta" + self.path + "eliminada")
                  return "Carpeta" + self.path + "eliminada"
                      
-            except:
-             return "No se pudo eliminar el archivo"
+            except Exception as e:
+             return "No se pudo eliminar el archivo" + str(e)
              
 

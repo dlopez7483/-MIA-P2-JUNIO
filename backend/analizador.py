@@ -267,3 +267,5 @@ class analisis:
      else:
          return "Error en la instrucción."
 
+
+

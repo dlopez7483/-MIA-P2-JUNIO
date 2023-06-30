@@ -12,6 +12,11 @@ s3_client = boto3.client(
      config=Config(signature_version='s3v4')
      )
 
+
+
+
+
+
 class Modify:
  def __init__(self,body,type,path):
      self.body=body

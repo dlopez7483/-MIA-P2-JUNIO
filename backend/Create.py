@@ -26,7 +26,7 @@ class Create:
     def crear(self):
         if self.type == "Server":
          carpetas = self.path.split("/")
-         cadena = str(os.getcwd() / 'Archivos') + "/"
+         cadena ='Archivos' + "/"
          for i in range(1, len(carpetas) - 1):
              cadena += carpetas[i] + "/"
              ruta = Path(cadena)
@@ -55,4 +55,3 @@ class Create:
              bit.insertar_log("No se pudo crear el archivo")
              return "No se pudo crear el archivo:", str(e)
 
-print(os.getcwd())
