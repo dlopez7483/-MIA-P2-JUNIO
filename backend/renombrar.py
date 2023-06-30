@@ -12,7 +12,6 @@ s3_client = boto3.client(
      config=Config(signature_version='s3v4')
      )
 
-
 class renombrar:
  def __init__(self, path, name, type):
      self.name = name
@@ -22,7 +21,7 @@ class renombrar:
 
  def renombrar_(self):
      if self.type=="Server":
-         ruta=str(os.getcwd()/'Archivos')+self.path
+         ruta=str('Archivos')+self.path
          existencia_path = os.path.exists(ruta)
          if(existencia_path):
              if re.search(r"\.txt$",ruta, re.I):

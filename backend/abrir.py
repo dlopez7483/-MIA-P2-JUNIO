@@ -25,7 +25,7 @@ class abrir:
      try:
          if self.ip=="" and self.port=="":
              if self.type=="Server":
-                 with open(str(Path.home() / 'Archivos/') + self.name, 'r') as archivo:
+                 with open( 'Archivos/' + self.name, 'r') as archivo:
                      contenido = archivo.read().decode('utf-8')
                      print(contenido)
                      return contenido

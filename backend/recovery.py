@@ -27,7 +27,7 @@ class recovery:
      if self.port=="" and self.ip=="":
          if self.type_from=="Server" and self.type_to=="Bucket":
                 try:
-                 ruta_archivo = Path(str(os.getcwd() / 'Archivos')+"/"+self.name+"/")
+                 ruta_archivo = Path(str('Archivos')+"/"+self.name+"/")
                  if ruta_archivo.exists():
                      for nombre_archivo in os.listdir(str(ruta_archivo)):
                          ruta_completa_origen = os.path.join(str(ruta_archivo), nombre_archivo)
@@ -44,7 +44,7 @@ class recovery:
          elif self.type_from=="Bucket" and self.type_to=="Server":
              response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos/"+self.name+"/")
              existencia = response.get('Contents', [])
-             root=str(os.getcwd()/'Archivos')
+             root=str('Archivos')
     
              ruta_archivo = Path(root)
              response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos/"+self.name+"/")

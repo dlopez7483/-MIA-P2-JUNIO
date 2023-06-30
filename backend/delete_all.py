@@ -21,7 +21,7 @@ class delete_all:
   
  def eliminar(self):
      if self.type=="Server":
-         root=str(os.getcwd()/'Archivos/')
+         root=str('Archivos/')
          try:
              for nombre_archivo in os.listdir(str(root)):
                     ruta_completa_origen = os.path.join(str(root), nombre_archivo)

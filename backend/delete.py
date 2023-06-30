@@ -24,7 +24,7 @@ class delete:
    
  def eliminar(self):
      if self.type=="Server":
-         root=str(os.getcwd()/'Archivos')
+         root=str('Archivos')
          if self.name!="":
              try:
                  ruta_archivo = Path(root+self.path+self.name)

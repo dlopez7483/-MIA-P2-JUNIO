@@ -10,7 +10,8 @@ s3_client = boto3.client(
      aws_secret_access_key='3VJOLOCaML8kMD6qt1zerGuYIq4REx4RKeGyo5vu',
      config=Config(signature_version='s3v4')
      )
-
+ 
+ 
 
 class backup:
  def __init__(self,type_to,type_from,ip,port,name):
@@ -24,7 +25,7 @@ class backup:
  def backup_(self):
      if self.port=="" and self.ip=="":
          if self.type_from=="Bucket" and self.type_to=="Server":
-             ruta = Path(str(os.getcwd() / 'Archivos')+"/"+self.name+"/")
+             ruta = Path( 'Archivos'+"/"+self.name+"/")
              if not ruta.exists():
                  ruta.mkdir(parents=True)
              return self.copiar_bucket_server()
@@ -34,7 +35,7 @@ class backup:
  def copiar_bucket_server(self):
      response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos/")
      existencia = response.get('Contents', [])
-     root=str(os.getcwd()/'Archivos')
+     root=str('Archivos')
     
      ruta_archivo = Path(root+"/"+self.name+"/")
      response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos/")
@@ -56,7 +57,7 @@ class backup:
  def copiar_server_bucket(self):
      response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos/")
      existencia = response.get('Contents', [])
-     root=str(os.getcwd()/'Archivos')
+     root=str('Archivos')
      ruta_archivo = Path(root)
      if ruta_archivo.exists() and existencia:
          try:

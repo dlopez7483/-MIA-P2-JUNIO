@@ -12,7 +12,6 @@ s3_client = boto3.client(
      config=Config(signature_version='s3v4')
      )
 
-
 class transfer:
  def __init__(self, desde, to, type_to, type_from):
      self.desde = desde
@@ -41,7 +40,7 @@ class transfer:
  def transfer_server_bucket(self):
      response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos"+self.to)
      existencia = response.get('Contents', [])
-     root=str(os.getcwd()/'Archivos')
+     root=str('Archivos')
      ruta_archivo = Path(root+self.desde)
      if ruta_archivo.exists() and existencia:
          if re.search(r"\.txt$", self.desde, re.I):
@@ -77,7 +76,7 @@ class transfer:
                  self.carpetas(ruta_completa_origen2,to+nombre_archivo,nombre_archivo2)
 
  def transfer_server_server(self): 
-     ruta=str(os.getcwd()/'Archivos')
+     ruta=str('Archivos')
      fro = ruta+ self.desde
      t = ruta+ self.to
 

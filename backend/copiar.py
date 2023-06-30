@@ -9,12 +9,11 @@ from bitacora import bit
 
 
 s3_client = boto3.client(
-    's3',
-    aws_access_key_id='AKIAVUJFRDVN5ZXYPPVS',
-    aws_secret_access_key='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',
-    config=Config(signature_version='s3v4')
-)
-
+     's3',
+     aws_access_key_id='AKIAVUJFRDVNRXAMFOH6',
+     aws_secret_access_key='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',
+     config=Config(signature_version='s3v4')
+     )
 
 
 
@@ -88,7 +87,7 @@ class copiar:
  def copiar_server_bucket(self):
      response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos"+self.to)
      existencia = response.get('Contents', [])
-     root=str(os.getcwd()/'Archivos')
+     root=str('Archivos')
      ruta_archivo = Path(root+self.desde)
      if ruta_archivo.exists() and existencia:
          if re.search(r"\.txt$", self.desde, re.I):
@@ -134,7 +133,7 @@ class copiar:
  
  
  def copiar_server_server(self):
-     ruta=str(os.getcwd()/'Archivos')
+     ruta=str('Archivos')
      fro = ruta+ self.desde
      t = ruta+ self.to
 
@@ -172,7 +171,7 @@ class copiar:
  def copiar_bucket_server(self):
      response = s3_client.list_objects(Bucket='bucket201907483', Prefix="Archivos"+self.desde)
      existencia = response.get('Contents', [])
-     root=str(os.getcwd()/'Archivos')
+     root=str('Archivos')
      ruta_archivo = Path(root+self.to)
      if ruta_archivo.exists() and existencia:
          try:

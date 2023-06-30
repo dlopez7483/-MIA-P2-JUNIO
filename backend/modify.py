@@ -12,7 +12,6 @@ s3_client = boto3.client(
      config=Config(signature_version='s3v4')
      )
 
-
 class Modify:
  def __init__(self,body,type,path):
      self.body=body
@@ -21,7 +20,7 @@ class Modify:
      self.modificar()
  def modificar(self):
      if self.type=="Server":
-         root=str(os.getcwd()/'Archivos')+self.path
+         root=str('Archivos')+self.path
          path_correcto=os.path.exists(root)
          if(path_correcto):
              if re.search(r"\.txt$",root, re.I):

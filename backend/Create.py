@@ -11,6 +11,10 @@ s3_client = boto3.client(
      config=Config(signature_version='s3v4')
      )
 
+
+
+
+
 class Create:
     def __init__(self, name, body, type, path):
         self.name = name
@@ -51,3 +55,4 @@ class Create:
              bit.insertar_log("No se pudo crear el archivo")
              return "No se pudo crear el archivo:", str(e)
 
+print(os.getcwd())
